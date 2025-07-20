@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Availability</title>
+</head>
+<body>
+    <div class="availability">
+        <h3>Availability</h3>
+
+        <label for="availableFrom">Available From:</label>
+        <input type="datetime-local" name="availableFrom" id="availableFrom" required />
+
+        <label for="availableTill">Available Till:</label>
+        <input type="datetime-local" name="availableTill" id="availableTill" required />
+
+        <label for="duration">Minimum Booking Duration:</label>
+        <select name="minimumBookingDuration" id="duration" required>
+          <option value="">--Select--</option>
+          <option value="0">0 days</option>
+          <option value="1">1 day</option>
+          <option value="2">2 days</option>
+          <option value="3">3 days</option>
+          <option value="4">4 days</option>
+          <option value="7">1 week or more</option>
+        </select>
+
+        <label for="blackoutDates">Blackout Dates:</label>
+        <input type="date" name="blackoutDates" id="blackoutDates" />
+      </div>
+</body>
+</html>
