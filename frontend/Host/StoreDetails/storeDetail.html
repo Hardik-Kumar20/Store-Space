@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Store Details</title>
+  <link rel="stylesheet" href="storeDetail.css" />
+</head>
+<body>
+  <div class="logo">
+    <!-- Add your logo image if needed -->
+  </div>
+
+  <div class="container">
+    <form action="/submit" method="POST">
+      <!-- Store Name -->
+      <div class="storeName">
+        <input type="text" name="storeName" placeholder="Store Name" required />
+      </div>
+
+      <!-- Store Type -->
+      <div class="type">
+        <label for="storeType">Type of Store:</label>
+        <select name="storeType" id="storeType" required>
+          <option value="">--Select Type--</option>
+          <option value="Garage">Garage</option>
+          <option value="StoreRoom">Store Room</option>
+          <option value="Basement">Basement</option>
+          <option value="Shed">Shed</option>
+          <option value="Warehouse">Warehouse</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <!-- Description -->
+      <div class="description">
+        <label for="description">Description:</label>
+        <textarea name="description" id="description" placeholder="Brief description of the store..." rows="4" required></textarea>
+      </div>
+
+      <!-- Availability Section -->
+      <div class="availability">
+        <h3>Availability</h3>
+
+        <label for="availableFrom">Available From:</label>
+        <input type="datetime-local" name="availableFrom" id="availableFrom" required />
+
+        <label for="availableTill">Available Till:</label>
+        <input type="datetime-local" name="availableTill" id="availableTill" required />
+
+        <label for="duration">Minimum Booking Duration:</label>
+        <select name="minimumBookingDuration" id="duration" required>
+          <option value="">--Select--</option>
+          <option value="0">0 days</option>
+          <option value="1">1 day</option>
+          <option value="2">2 days</option>
+          <option value="3">3 days</option>
+          <option value="4">4 days</option>
+          <option value="7">1 week or more</option>
+        </select>
+
+        <label for="blackoutDates">Blackout Dates:</label>
+        <input type="date" name="blackoutDates" id="blackoutDates" />
+      </div>
+
+      <!-- Area Specifications Section -->
+      <div class="area-specs">
+        <h3>Area Specifications</h3>
+
+        <label for="length">Length (ft):</label>
+        <input type="number" name="length" id="length" step="0.1" min="0" required />
+
+        <label for="width">Width (ft):</label>
+        <input type="number" name="width" id="width" step="0.1" min="0" required />
+
+        <label for="height">Height (ft):</label>
+        <input type="number" name="height" id="height" step="0.1" min="0" />
+
+        <label for="floorLevel">Floor Level:</label>
+        <select name="floorLevel" id="floorLevel" required>
+          <option value="">--Select--</option>
+          <option value="Ground">Ground Floor</option>
+          <option value="Basement">Basement</option>
+          <option value="1st Floor">1st Floor</option>
+          <option value="2nd Floor">2nd Floor</option>
+        </select>
+
+        <label for="weightCapacity">Weight Capacity (kg):</label>
+        <input type="number" name="weightCapacity" id="weightCapacity" step="10" min="0" />
+      </div>
+
+      <!-- Submit Button -->
+      <div class="submit-btn">
+        <button type="submit">Submit Store Details</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="storeDetail.js"></script>
+</body>
+</html>
