@@ -4,7 +4,7 @@
 document.getElementById('btn').addEventListener('click' , coordinate);
 async function coordinate() {
     const address = document.getElementById("address").value;
-    const apiKey = '4d77e65646e64fb4a10695ad33f067e8';
+    const apiKey = process.env.apiKey;
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(address)}&key=${apiKey}&limit=1`;
 
     const res = await fetch(url);
