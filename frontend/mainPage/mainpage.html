@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StoreSpace</title>
+  <link rel="stylesheet" href="mainpage.css"> <!-- Include your CSS -->
+</head>
+<body>
+
+  <!-- 🔹 Logo Section -->
+  <div class="logo">
+    <h1>StoreSpace</h1> <!-- Add a logo or image here -->
+  </div>
+
+  <!-- 🔹 Header Navigation -->
+  <header class="header">
+    <nav>
+      <ul class="nav-list">
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+        <li><a href="/host">Become a Host</a></li>
+        <!-- Optional: Language/Currency dropdown here -->
+      </ul>
+    </nav>
+  </header>
+
+  <!-- 🔹 Search Bar -->
+  <section class="srchBar">
+    <form id="searchForm" method="GET" action="/search">
+      <input type="text" name="where" id="location" placeholder="Where" required />
+      
+      <input type="date" name="checkin" id="checkin" required />
+      <input type="date" name="checkout" id="checkout" required />
+      
+      <select name="size" id="size" required>
+        <option value="">Select Size</option>
+        <option value="small">Small</option>
+        <option value="medium">Medium</option>
+        <option value="large">Large</option>
+      </select>
+
+      <button type="submit">🔍 Search</button>
+    </form>
+  </section>
+
+</body>
+</html>
