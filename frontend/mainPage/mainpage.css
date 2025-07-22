@@ -103,3 +103,60 @@ form button {
 form button:hover {
   background-color: #084ec1;
 }
+
+
+/* footer */
+
+footer {
+  background-color: #1c1c1e;
+  color: white;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  font-family: Arial, sans-serif;
+  border-top: 1px solid #333;
+}
+
+footer div {
+  flex: 1 1 200px;
+  margin: 10px;
+}
+
+footer h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+footer ul {
+  list-style: none;
+  padding: 0;
+}
+
+footer li {
+  margin: 10px 0;
+}
+
+footer a {
+  color: #ccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+/* Optional: responsive tweaks */
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  footer div {
+    margin: 20px 0;
+  }
+}
