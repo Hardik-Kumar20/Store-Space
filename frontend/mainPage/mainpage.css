@@ -59,6 +59,8 @@ body {
   height: calc(100vh - 180px); /* full height minus header + logo */
   padding: 20px;
   background-image: linear-gradient(to right, #f8fbff, #e4efff);
+  height: 200px;
+  
 }
 
 form {
@@ -159,4 +161,8 @@ footer a:hover {
   footer div {
     margin: 20px 0;
   }
+}
+
+.searchBar{
+  height: 600px;
 }
