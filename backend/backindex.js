@@ -1,7 +1,8 @@
 const express = require ('express');
+const path = require('path');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
-require('./db');
+// require('./db');
 const mongoose = require('mongoose');
 // const cors = require('cors');
 const jsonwebtoken = require('jsonwebtoken');
@@ -10,8 +11,21 @@ const Port = process.env.PORT || 8000;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+/// Static access on frontend folder
+app.use('/Authentication/login', express.static(path.join(__dirname, '../frontend/Authentication/login')));
+app.use('/Authentication/signUp', express.static(path.join(__dirname, '../frontend/Authentication/signUp')));
+
+
+
+
+
 const loginIndex = require('./Routers/loginIndex');
 const signupIndex = require('./Routers/signupIndex');
+
+
+
+
 app.get("/" , (req , res)=>{
     res.send("Api is working fine");
 })
@@ -23,6 +37,8 @@ app.use("/login" , loginIndex);
 app.use("/signup" , signupIndex);
 
 // api for jsonwebtoken 
+
+
 
 
 

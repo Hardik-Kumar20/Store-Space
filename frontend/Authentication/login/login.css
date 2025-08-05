@@ -101,6 +101,39 @@ form span {
     cursor: pointer;
     text-decoration: underline;
 }
+.loginAs{
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-bottom: 40px;
+}
+.loginAs div{
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80px;
+    color: white;
+   border: 1px solid black;
+    border-radius: 10px;
+    background-color: #0077b6;
+    transition: all 0.5s ease-in-out;
+}
+.host:hover {
+    cursor: pointer;
+    width: 100px;
+}
+.client:hover{
+    cursor: pointer;
+    width: 100px;
+}
+
+.role{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 7px;
+}
 
 /* Responsive */
 @media (max-width: 500px) {

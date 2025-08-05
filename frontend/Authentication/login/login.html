@@ -9,17 +9,23 @@
 <body>
     <div class="logo"><h3>StoreSpace</h3></div>
     <div class="container">
+        <div class="role"><h2><p>Login As</p></h2></div>
+        <div class="loginAs">
+        <div class="host">Host</div>
+        <div class="client">Client</div>
+        </div>
     <div class="heading"><h2>Host Login</h2></div>
     <div class="login">
         <form action="" method="post" id="login">
             <input type="text" placeholder="User Name" name="userName">
             <input type="password" name="userPass" id="password" placeholder="password">
             <input type="button" value="submit" id="btn">
-            <p>Already have account? <span>signUp</span></p>
+            <p>Already have account? <span id="signup" style="cursor: pointer; color: blue;">SignUp</span></p>
         </form>
         
     </div>
     </div>
-    <script src="login.js"></script>
+    <script src="login.js" async></script>
+
 </body>
 </html>

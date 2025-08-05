@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
+
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt')
 const jsonWebToken = require('jsonwebtoken');
@@ -16,8 +16,8 @@ loginRouter.get('/' , (req , res)=>{
 //accept the data from the body of front end 
 loginRouter.post('/login' , async (res , req)=>{
    try {
-    const{userName , password} = req.body;
-    console.log(username , password);
+    const{userName , password , role} = req.body;
+    console.log(username , password , role);
 
     const existingUser = await UserModel.findOne({userName});
     if(!existingUser){
@@ -30,9 +30,20 @@ loginRouter.post('/login' , async (res , req)=>{
         res.status(401).json('Password is Incorrect');
     }
     
+    // decision to take him to dashboard or Search page
+    if(role.isEqual("Host") || role.isEqual("host")){
+        // take him to dashboard
+    }
+    if(role.isEqual("Client") || role.isEqual("client")){
+        // take him to search area
+    }
+
    } catch (error) {
     res.status(500).json({message : error.message});
    }
 })
+
+
+
 
 module.exports = loginRouter;
