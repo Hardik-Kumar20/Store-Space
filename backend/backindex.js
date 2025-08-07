@@ -2,7 +2,7 @@ const express = require ('express');
 const path = require('path');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
-// require('./db');
+require('./db');
 const mongoose = require('mongoose');
 // const cors = require('cors');
 const jsonwebtoken = require('jsonwebtoken');
