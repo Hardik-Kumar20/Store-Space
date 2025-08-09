@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const jsonWebToken = require('jsonwebtoken');
 const signupRouter = express.Router();
 
+//middleware to access the data sent in form of json
 signupRouter.use(bodyParser.json());
 
 signupRouter.get('/' , (req , res)=>{
@@ -37,9 +38,8 @@ signupRouter.post('/signup' , async (req , res)=>{
         password : hashPass
     })
         await newSchema.save();
-        res.status(200).json('Hashed Password and other details have been saved successfully.')
-
-        res.send({message: 'signup post is working fine data is stored successfully'})
+        res.status(200).json({message : 'User created successfully.'})
+        console.log(newSchema);
     } catch (error) {
         res.status(500).json({message : error.message});
     }

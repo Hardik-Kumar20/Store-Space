@@ -9,29 +9,32 @@
 }
 
 body {
-    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    background: linear-gradient(135deg, #e0f7fa, #f0faff);
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
 
 /* Logo */
 .logo h3 {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.2rem;
+    font-weight: 700;
     color: #0077b6;
     margin-bottom: 20px;
+    letter-spacing: 1px;
 }
 
 /* Container */
 .container {
     background-color: #ffffff;
-    padding: 30px 40px;
+    padding: 35px 40px;
     border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    width: 320px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 340px;
+    animation: fadeIn 0.6s ease-in-out;
 }
 
 /* Heading */
@@ -39,55 +42,79 @@ body {
     text-align: center;
     color: #023e8a;
     margin-bottom: 25px;
+    font-size: 1.8rem;
 }
 
-/* Login form */
-.login form {
+/* Sign-up form */
+.signUp form {
     display: flex;
     flex-direction: column;
 }
 
-.login input[type="email"],
-.login input[type="password"] {
+.signUp input[type="text"],
+.signUp input[type="email"],
+.signUp input[type="password"] {
     padding: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     border: 1px solid #b0bec5;
     border-radius: 8px;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
 }
 
-.login input[type="email"]:focus,
-.login input[type="password"]:focus {
+.signUp input[type="text"]:focus,
+.signUp input[type="email"]:focus,
+.signUp input[type="password"]:focus {
     border-color: #0077b6;
+    box-shadow: 0 0 8px rgba(0, 119, 182, 0.3);
 }
 
 /* Submit Button */
 #btn {
     padding: 12px;
-    background-color: #0077b6;
+    background: linear-gradient(135deg, #0077b6, #0096c7);
     color: white;
     border: none;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    transition: transform 0.2s ease, background-color 0.3s ease;
 }
 
 #btn:hover {
-    background-color: #023e8a;
+    background: linear-gradient(135deg, #023e8a, #0077b6);
+    transform: scale(1.02);
 }
 
 /* Bottom Text */
-.login p {
+.signUp p {
     text-align: center;
     margin-top: 15px;
     font-size: 0.9rem;
 }
 
-.login p span {
+.signUp p span {
     color: #0077b6;
     cursor: pointer;
     font-weight: 600;
     text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.signUp p span:hover {
+    color: #023e8a;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
