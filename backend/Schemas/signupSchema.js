@@ -4,11 +4,11 @@ const signupSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    email :{
+    userEmail :{
         type : String,
         required : true
     },
-    password : {
+    userPass : {
         type : String,
         required : true
     }
