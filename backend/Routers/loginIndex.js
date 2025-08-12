@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt')
-const jsonWebToken = require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 const UserModel = require('../Schemas/loginSchema')
 const loginRouter = express.Router();
 loginRouter.use(bodyParser.json());
@@ -12,6 +12,8 @@ loginRouter.get('/' , (req , res)=>{
     res.send('Hi from login backend router');
 })
 
+//jwt secret key 
+const jwtSecret = process.env.JWT_SECRET;
 
 //accept the data from the body of front end 
 loginRouter.post('/login' , async (res , req)=>{
@@ -30,13 +32,15 @@ loginRouter.post('/login' , async (res , req)=>{
         res.status(401).json('Password is Incorrect');
     }
     
-    // decision to take him to dashboard or Search page
-    if(role.isEqual("Host") || role.isEqual("host")){
-        // take him to dashboard
+    // JWT payload
+    const payload = {
+        userId : userName._id
     }
-    if(role.isEqual("Client") || role.isEqual("client")){
-        // take him to search area
-    }
+    // sign the token
+    const token = jwt.sign(payload , jwtSecret , {expiresIn : '1d'});
+
+    //send the token back 
+    res.json(token);
 
    } catch (error) {
     res.status(500).json({message : error.message});

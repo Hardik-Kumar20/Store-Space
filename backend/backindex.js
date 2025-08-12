@@ -21,14 +21,16 @@ app.use('/Authentication/signUp', express.static(path.join(__dirname, '../fronte
 // Routers
 const loginIndex = require('./Routers/loginIndex');
 const signupIndex = require('./Routers/signupIndex');
+const listing = require("./Routers/listing");
 
 app.get("/", (req, res) => {
     res.send("Api is working fine");
 });
 
-// Login and signup routes
+// Login and signup routes and listing routes
 app.use("/login", loginIndex);
 app.use("/signup", signupIndex);
+app.use("/listing" , listing)
 
 // Start server
 app.listen(Port, (err) => {

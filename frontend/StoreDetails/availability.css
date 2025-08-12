@@ -1,0 +1,85 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #e6f2ff; /* Light blue background */
+    margin: 0;
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    color: #333;
+}
+
+.availability {
+    background: #ffffff;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    max-width: 400px;
+    width: 100%;
+    border: 2px solid #b3d9ff; /* Light blue border */
+}
+
+.availability h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0066cc; /* Deep blue title */
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #004080; /* Darker blue text */
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border: 1px solid #99ccff;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background-color: #f5faff; /* Very light blue background */
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #3399ff;
+    box-shadow: 0 0 0 3px rgba(51, 153, 255, 0.2);
+}
+
+option {
+    padding: 5px;
+}
+
+#sub {
+    background: #3399ff; /* Primary blue */
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-top: 20px;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#sub:hover {
+    background: #1a8cff; /* Darker blue on hover */
+    transform: scale(1.03);
+}
+
+@media (max-width: 500px) {
+    body {
+        padding: 20px;
+    }
+    .availability {
+        padding: 20px;
+    }
+}
