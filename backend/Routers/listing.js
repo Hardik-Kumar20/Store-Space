@@ -1,37 +1,56 @@
 const express = require('express');
-const router = express.Router();
-const Listing = require('../Schemas/listingScehma'); 
+const Listing = require('../models/Listing');
+const User = require('../models/User');
 const authenticateJWT = require('../middleware/authMiddleware');
 
-// Create a new listing (POST /listings)
-router.post('/listing', authenticateJWT, async (req, res) => {
+const router = express.Router();
+
+//new listing created
+router.post('/', authenticateJWT, async (req, res) => {
   try {
-    const userId = req.user.userId; // from JWT payload
+    const { userId } = req.user;
 
-    // Create listing
-    const newListing = new Listing({
-      name: req.body.name,
-      address: req.body.address,
-      kindOf: req.body.kindOf,
-      description: req.body.description,
+    // Validate minimal body fields
+    const { name, address, kindOf, description, area } = req.body || {};
+    if (!name || !address || !kindOf || !description || !area) {
+      return res.status(400).json({ message: 'Missing required fields' });
+    }
+
+    
+    const listing = new Listing({
+      owner: userId,
+      name,
+      address,
+      kindOf,
+      description,
       area: {
-        lenght: req.body.area.lenght,
-        width: req.body.area.width,
-        height: req.body.area.height,
-        floor: req.body.area.floor,
-        weight: req.body.area.weight
-      },
-      owner: userId 
+        length: Number(area.length),
+        width: Number(area.width),
+        height: Number(area.height),
+        floor: area.floor,
+        weight: Number(area.weight)
+      }
     });
-
-    await newListing.save();
-    res.status(201).json({
+    //saved the listing
+    const saved = await listing.save();
+    console.log(createdAt);
+    return res.status(201).json({
       message: 'Listing created successfully',
-      listing: newListing
+      listing: saved
     });
 
   } catch (error) {
-    console.error(error);
+    console.error('Create listing error:', error);
+    return res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+router.get('/me', authenticateJWT, async (req, res) => {
+  try {
+    const { userId } = req.user;
+    const listings = await Listing.find({ owner: userId }).sort({ createdAt: -1 });
+    res.json({ listings });
+  } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 });

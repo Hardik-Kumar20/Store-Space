@@ -8,7 +8,7 @@ function authJWT(req , res , next) {
     const token = authToken.split('')[1];
 
     // verifying
-    jwt.verify(token , JWT_SECRET , (err , user)=>{
+    jwt.verify(token , jwtsecret , (err , user)=>{
         if(err) return res.status(401).json({message : "Bad Auth"});
 
         req.user = user;

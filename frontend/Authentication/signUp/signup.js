@@ -33,4 +33,10 @@ window.addEventListener('DOMContentLoaded', () => {
             window.location.href = "/Authentication/login/login.html";
         }, 500);
     });
+
+    document.getElementById("host").addEventListener("click", () => {
+        setTimeout(() => {
+            window.location.href = "/Authentication/login/login.html";
+        }, 500);
+    });
 });

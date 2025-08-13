@@ -49,7 +49,7 @@ const listingSchema = new mongoose.Schema({
         type : String,
         required : true
     }
-})
+}, {timestamps: true})
 
 const LSchema = mongoose.model("LSchema" , listingSchema);
 module.exports = LSchema;
