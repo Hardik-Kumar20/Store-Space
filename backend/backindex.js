@@ -22,7 +22,9 @@ app.use('/Authentication/signUp', express.static(path.join(__dirname, '../fronte
 const loginIndex = require('./Routers/loginIndex');
 const signupIndex = require('./Routers/signupIndex');
 const listing = require("./Routers/listing");
+const availability = require("./Routers/availability");
 
+// api check 
 app.get("/", (req, res) => {
     res.send("Api is working fine");
 });
@@ -30,7 +32,8 @@ app.get("/", (req, res) => {
 // Login and signup routes and listing routes
 app.use("/login", loginIndex);
 app.use("/signup", signupIndex);
-app.use("/listing" , listing)
+app.use("/listing" , listing);
+app.use("/availability" , availability);
 
 // Start server
 app.listen(Port, (err) => {

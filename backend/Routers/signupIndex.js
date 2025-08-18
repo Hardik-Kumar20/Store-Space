@@ -20,7 +20,7 @@ signupRouter.get('/' , (req , res)=>{
 
 signupRouter.post('/signup', async (req, res) => {
     try {
-      const { userName, userEmail, userPass } = req.body;
+      const { userName, userEmail, password } = req.body;
   
       const isExistingUser = await UserModel.findOne({ userName });
       if (isExistingUser) {
@@ -33,12 +33,12 @@ signupRouter.post('/signup', async (req, res) => {
       }
   
       const salt = await bcrypt.genSalt(10);
-      const hashPass = await bcrypt.hash(userPass, salt);
+      const hashPass = await bcrypt.hash(password, salt);
   
       const newUser = new UserModel({
         userName,
         userEmail,
-        userPass: hashPass
+        password: hashPass
       });
   
       await newUser.save();

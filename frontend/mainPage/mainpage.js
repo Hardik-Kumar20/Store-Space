@@ -13,9 +13,14 @@ window.addEventListener("DOMContentLoaded" , ()=>{
     
 
     document.getElementById("becomeHost").addEventListener("click" , ()=>{
-        const isLoggedin = 
+        const token = localStorage.getItem("authToken")
+        console.log(token);
         setTimeout(() => {
-            window.location.href = "/StoreDetails/storeDetail.html"
+            if(token){
+                window.location.href = "/StoreDetails/storeDetail.html"
+            }else{
+                window.location.href = "/Authentication/login/login.html"
+            }
         } , 500)
     })
 })

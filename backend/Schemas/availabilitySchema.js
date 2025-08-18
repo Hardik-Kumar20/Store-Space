@@ -29,5 +29,5 @@ const avSchema = new mongoose.Schema({
     { timestamps: true }
 );
 
-const Schema = mongoose.model("Schema" , avSchema);
-module.exports = Schema;
+const aSchema = mongoose.model("aSchema" , avSchema);
+module.exports = aSchema;

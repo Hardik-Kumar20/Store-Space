@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken');
 const UserModel = require('../Schemas/loginSchema')
 const loginRouter = express.Router();
+require('dotenv').config();
 loginRouter.use(bodyParser.json());
 
 loginRouter.get('/' , (req , res)=>{
@@ -14,36 +15,40 @@ loginRouter.get('/' , (req , res)=>{
 
 //jwt secret key 
 const jwtSecret = process.env.JWT_SECRET;
-
+console.log(jwtSecret);
 //accept the data from the body of front end 
-loginRouter.post('/login' , async (res , req)=>{
+loginRouter.post('/login' , async (req , res)=>{
+    console.log("Request body:", req.body);
    try {
-    const{userName , password , role} = req.body;
-    console.log(username , password , role);
+    const{userName , password } = req.body;
+    console.log(userName , password );
 
     const existingUser = await UserModel.findOne({userName});
     if(!existingUser){
-        res.status(401).json('Username not found')
+        return res.status(401).json('Username not found')
     }
 
 
     const isPasswordCorrect = await bcrypt.compare(password , existingUser.password)
     if(!isPasswordCorrect){
-        res.status(401).json('Password is Incorrect');
+        return res.status(401).json('Password is Incorrect');
     }
     
+
+    console.log("everything is fine.")
     // JWT payload
     const payload = {
-        userId : userName._id
+        userId : existingUser._id
     }
     // sign the token
     const token = jwt.sign(payload , jwtSecret , {expiresIn : '1d'});
 
     //send the token back 
-    res.json(token);
+    res.json({token});
 
    } catch (error) {
     res.status(500).json({message : error.message});
+    console.log('log error: ' , error);
    }
 })
 

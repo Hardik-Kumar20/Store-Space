@@ -8,7 +8,7 @@ const signupSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    userPass : {
+    password : {
         type : String,
         required : true
     }

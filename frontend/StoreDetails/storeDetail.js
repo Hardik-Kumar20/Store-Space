@@ -1,10 +1,17 @@
 window.addEventListener("DOMContentLoaded", () => {
+
+    // checking for token authorization
+    const token = localStorage.getItem('authToken');
+
+    if(!token){
+        window.location.href = "/Authentication/signUp/signup.html"
+    }
+
+
     const sub = document.getElementById('login'); 
 
     sub.addEventListener('submit', async function(e) {
         e.preventDefault();
-
-        const token = localStorage.getItem('authToken');
 
         const UserData = {
             name: sub.storeName.value,

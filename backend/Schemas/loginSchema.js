@@ -7,12 +7,8 @@ const loginSchema = new mongoose.Schema({
     password : {
         type : String,
         required : true
-    },
-    role:{
-        type : String,
-        required : true
     }
-})
+} , {collection : "schemas"})
 
 const login = mongoose.model('login' , loginSchema);
 module.exports = login;

@@ -7,7 +7,7 @@ window.addEventListener('DOMContentLoaded', () => {
         const data = {
             userName: form.userName.value,    // match your input name attributes exactly
             userEmail: form.userEmail.value,
-            userPass: form.userPass.value
+            password: form.userPass.value
         };
 
         try {
@@ -22,7 +22,11 @@ window.addEventListener('DOMContentLoaded', () => {
             const result = await res.json();
             console.log(result);
 
-            // Optional: show success message or redirect user
+            if(res.ok){
+                setTimeout(()=>{
+                    window.location.href = "/Authentication/login/login.html"
+                } , 500)
+            }
         } catch (error) {
             console.error("Error submitting signup form:", error);
         }
@@ -34,9 +38,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }, 500);
     });
 
-    document.getElementById("host").addEventListener("click", () => {
-        setTimeout(() => {
-            window.location.href = "/Authentication/login/login.html";
-        }, 500);
-    });
+
+  
 });
