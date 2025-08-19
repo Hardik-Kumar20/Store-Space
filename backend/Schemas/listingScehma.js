@@ -24,7 +24,7 @@ const listingSchema = new mongoose.Schema({
         required : true
     },
     area : {
-        lenght : {
+        length : {
             type : Number,
             required : true
         },

@@ -2,13 +2,14 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // checking for token authorization
     const token = localStorage.getItem('authToken');
-
+    localStorage.setItem("authToken" , token)
+    console.log(token);
     if(!token){
         window.location.href = "/Authentication/signUp/signup.html"
     }
 
 
-    const sub = document.getElementById('login'); 
+    const sub = document.getElementById('detailsForm'); 
 
     sub.addEventListener('submit', async function(e) {
         e.preventDefault();
@@ -28,7 +29,7 @@ window.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            const res = await fetch('/api/listings', {
+            const res = await fetch('/listing/listing', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -39,10 +40,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
             const data = await res.json();
             console.log(data);
-
+            console.log(res);
             if (res.ok) {
                 // Redirect to availability page
-                window.location.href = "/availability.html";
+                window.location.href = "/StoreDetails/availability.html";
             } else {
                 alert(data.message || "Error creating listing");
             }

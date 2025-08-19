@@ -15,6 +15,7 @@ app.use(express.json());
 
 // Serve static frontend files
 app.use(express.static(path.join(__dirname, '../frontend')));
+app.use("/images",express.static(path.join(__dirname, '../Images')));
 app.use('/Authentication/login', express.static(path.join(__dirname, '../frontend/Authentication/login')));
 app.use('/Authentication/signUp', express.static(path.join(__dirname, '../frontend/Authentication/signUp')));
 

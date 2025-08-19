@@ -5,7 +5,7 @@ const authenticateJWT = require('../middleware/authMiddleware');
 const router = express.Router();
 
 //new listing created
-router.post('/', authenticateJWT, async (req, res) => {
+router.post('/listing', authenticateJWT, async (req, res) => {
   try {
     const { userId } = req.user;
 
@@ -32,7 +32,7 @@ router.post('/', authenticateJWT, async (req, res) => {
     });
     //saved the listing
     const saved = await listing.save();
-    console.log(createdAt);
+    console.log(saved.createdAt);
     return res.status(201).json({
       message: 'Listing created successfully',
       listing: saved

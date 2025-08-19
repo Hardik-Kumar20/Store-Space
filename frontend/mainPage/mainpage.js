@@ -8,9 +8,14 @@ window.addEventListener("DOMContentLoaded" , ()=>{
     document.getElementById("signUp").addEventListener("click" , ()=>{
         setTimeout(() => {
             window.location.href = "/Authentication/signUp/signup.html";
-        })
+        }, 500)
     })
     
+    document.getElementById("about").addEventListener("click" , ()=>{
+        setTimeout(() => {
+            window.location.href = "/about/about.html";
+        }, 500)
+    })
 
     document.getElementById("becomeHost").addEventListener("click" , ()=>{
         const token = localStorage.getItem("authToken")

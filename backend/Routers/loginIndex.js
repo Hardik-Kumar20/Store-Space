@@ -34,8 +34,6 @@ loginRouter.post('/login' , async (req , res)=>{
         return res.status(401).json('Password is Incorrect');
     }
     
-
-    console.log("everything is fine.")
     // JWT payload
     const payload = {
         userId : existingUser._id
