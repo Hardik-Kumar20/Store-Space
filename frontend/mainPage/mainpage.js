@@ -28,4 +28,10 @@ window.addEventListener("DOMContentLoaded" , ()=>{
             }
         } , 500)
     })
+
+    document.getElementById("contact").addEventListener("click" , ()=>{
+        setTimeout(() => {
+            window.location.href = "/Contact/contact.html";
+        }, 500)
+    })
 })
