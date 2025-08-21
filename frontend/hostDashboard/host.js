@@ -1,1 +1,0 @@
-// fetching data about the host from backend and then changing the dashboard according to the values provided by backend 

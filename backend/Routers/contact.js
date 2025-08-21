@@ -5,7 +5,7 @@ require('dotenv').config();
 const app = express();
 
 router.post('/contact' , (req , res)=>{
-    console.log("📩 Incoming contact request:", req.body);
+    console.log(" Incoming contact request:", req.body);
     const {name , email , message} = req.body;
 
     // configure your email transporter
