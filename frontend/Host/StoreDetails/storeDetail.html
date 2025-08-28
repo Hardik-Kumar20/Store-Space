@@ -7,71 +7,96 @@
   <link rel="stylesheet" href="storeDetail.css" />
 </head>
 <body>
-  <div class="logo">
-    
-  </div>
+  <!-- Logo / Header -->
+  <header class="logo">
+    <h1>🏠 StoreSpace</h1>
+    <p>Share your extra space & earn safely</p>
+  </header>
 
   <div class="container">
     <form action="" method="POST" id="detailsForm">
       
-      <div class="storeName">
-        <input type="text" name="storeName" placeholder="Store Name" required />
+      <!-- Box 1: Store Info -->
+      <div class="box">
+        <h2>📍 Store Information</h2>
+        
+        <div class="input-group">
+          <label for="storeName">Store Name</label>
+          <input type="text" name="storeName" id="storeName" placeholder="Ex: John's Garage" required />
+        </div>
+
+        <div class="input-group">
+          <label for="address">Address</label>
+          <input type="text" name="Address" id="address" placeholder="Enter store address" required>
+          <ul id="suggestions"></ul>
+        </div>
+
+        <div class="input-group">
+          <label for="storeType">Type of Store</label>
+          <select name="storeType" id="storeType" required>
+            <option value="">--Select Type--</option>
+            <option value="Garage">Garage</option>
+            <option value="StoreRoom">Store Room</option>
+            <option value="Basement">Basement</option>
+            <option value="Shed">Shed</option>
+            <option value="Warehouse">Warehouse</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
       </div>
 
-      <div class="adrs">
-        <input type="text" name="Address" id="address" placeholder="Address">
-        <ul id="suggestions"></ul>
-      </div>
-      
-      <div class="type">
-        <label for="storeType">Type of Store:</label>
-        <select name="storeType" id="storeType" required>
-          <option value="">--Select Type--</option>
-          <option value="Garage">Garage</option>
-          <option value="StoreRoom">Store Room</option>
-          <option value="Basement">Basement</option>
-          <option value="Shed">Shed</option>
-          <option value="Warehouse">Warehouse</option>
-          <option value="Other">Other</option>
-        </select>
+      <!-- Box 2: Description -->
+      <div class="box">
+        <h2>📝 Description</h2>
+        <div class="input-group">
+          <label for="description">Tell us about your store</label>
+          <textarea name="description" id="description" placeholder="Brief description of the store (safety, size, access, etc.)..." rows="4" required></textarea>
+        </div>
       </div>
 
-      
-      <div class="description">
-        <label for="description">Description:</label>
-        <textarea name="description" id="description" placeholder="Brief description of the store..." rows="4" required></textarea>
+      <!-- Box 3: Area Specs -->
+      <div class="box">
+        <h2>📐 Area Specifications</h2>
+        
+        <div class="input-group">
+          <label for="length">Length (ft)</label>
+          <input type="number" name="length" id="length" step="0.1" min="0" required />
+        </div>
+
+        <div class="input-group">
+          <label for="width">Width (ft)</label>
+          <input type="number" name="width" id="width" step="0.1" min="0" required />
+        </div>
+
+        <div class="input-group">
+          <label for="height">Height (ft)</label>
+          <input type="number" name="height" id="height" step="0.1" min="0" />
+        </div>
+
+        <div class="input-group">
+          <label for="floorLevel">Floor Level</label>
+          <select name="floorLevel" id="floorLevel" required>
+            <option value="">--Select--</option>
+            <option value="Ground">Ground Floor</option>
+            <option value="Basement">Basement</option>
+            <option value="1st Floor">1st Floor</option>
+            <option value="2nd Floor">2nd Floor</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <label for="weightCapacity">Weight Capacity (kg)</label>
+          <input type="number" name="weightCapacity" id="weightCapacity" step="10" min="0" />
+        </div>
       </div>
 
-      
-      <div class="area-specs">
-        <h3>Area Specifications</h3>
-
-        <label for="length">Length (ft):</label>
-        <input type="number" name="length" id="length" step="0.1" min="0" required />
-
-        <label for="width">Width (ft):</label>
-        <input type="number" name="width" id="width" step="0.1" min="0" required />
-
-        <label for="height">Height (ft):</label>
-        <input type="number" name="height" id="height" step="0.1" min="0" />
-
-        <label for="floorLevel">Floor Level:</label>
-        <select name="floorLevel" id="floorLevel" required>
-          <option value="">--Select--</option>
-          <option value="Ground">Ground Floor</option>
-          <option value="Basement">Basement</option>
-          <option value="1st Floor">1st Floor</option>
-          <option value="2nd Floor">2nd Floor</option>
-        </select>
-
-        <label for="weightCapacity">Weight Capacity (kg):</label>
-        <input type="number" name="weightCapacity" id="weightCapacity" step="10" min="0" />
-      </div>
-
-      
-      <div class="submit-btn">
+      <!-- Box 4: Submit -->
+      <div class="box submit-box">
+        <h2>🚀 Ready?</h2>
+        <p>Click below to submit your store details</p>
         <button type="submit">Submit Store Details</button>
       </div>
+
     </form>
   </div>
 

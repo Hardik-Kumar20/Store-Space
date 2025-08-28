@@ -34,4 +34,38 @@ window.addEventListener("DOMContentLoaded" , ()=>{
             window.location.href = "/Contact/contact.html";
         }, 500)
     })
+
+
+
+
+
+    // Now Saving the searchBar form data 
+    const sub = document.getElementById("searchForm");
+    sub.addEventListener("submit" , async (e)=>{
+        e.preventDefault();
+        try {
+            const formData = {
+                location : sub.location.value,
+                checkin : sub.checkin.value,
+                checkout : sub.checkout.value,
+                size : sub.size.value
+            }
+
+            const res = await fetch("/mainpage/searchBar" , {
+                method : "Post",
+                headers : {"Content-Type" : "application/json"},
+                body: JSON.stringify(formData)
+            })
+
+            const result = await res.json()
+            console.log(result);
+
+            if(res.ok){
+                window.location.href = "/client/SearchResult/result.html"
+            }
+
+        } catch (error) {
+            console.log("Error in sedarchBar Frontend" , error);
+        }
+    })
 })

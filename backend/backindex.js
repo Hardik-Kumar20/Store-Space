@@ -25,6 +25,7 @@ const signupIndex = require('./Routers/signupIndex');
 const listing = require("./Routers/listing");
 const availability = require("./Routers/availability");
 const contact = require("./Routers/contact");
+const mainPageRouter = require("./Routers/mainPage")
 // api check 
 app.get("/", (req, res) => {
     res.send("Api is working fine");
@@ -36,6 +37,7 @@ app.use("/signup", signupIndex);
 app.use("/listing" , listing);
 app.use("/availability" , availability);
 app.use("/contact" , contact);
+app.use("/mainpage" , mainPageRouter);
 
 // Start server
 app.listen(Port, (err) => {

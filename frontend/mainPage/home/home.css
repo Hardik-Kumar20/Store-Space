@@ -166,3 +166,39 @@ footer a:hover {
 .searchBar{
   height: 600px;
 }
+
+.srchBar form {
+  position: relative; /* makes suggestions dropdown align properly */
+}
+
+#suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0 0 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  width: 100%; /* fit exactly with input */
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#suggestions li {
+  padding: 12px 15px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  font-size: 1rem;
+  color: #333;
+}
+
+#suggestions li:hover {
+  background-color: #e4efff;
+}
+
+form input:focus {
+  outline: none;
+  box-shadow: none;
+}

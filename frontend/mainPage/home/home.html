@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>StoreSpace</title>
-  <link rel="stylesheet" href="mainpage.css"> <!-- Include your CSS -->
+  <link rel="stylesheet" href="home.css"> <!-- Include your CSS -->
 </head>
 <body>
 
@@ -31,8 +31,8 @@
    <div class="searchBar">
   <section class="srchBar">
     <form id="searchForm" method="GET" action="/search">
-      <input type="text" name="where" id="location" placeholder="Where" required />
-      
+      <input type="text" name="location" id="location" placeholder="Where" required autocomplete="off" />
+      <ul id="suggestions"></ul>
       <input type="date" name="checkin" id="checkin" required />
       <input type="date" name="checkout" id="checkout" required />
       
@@ -43,7 +43,7 @@
         <option value="large">Large</option>
       </select>
 
-      <button type="submit">🔍 Search</button>
+      <button type="submit" id="submit">🔍 Search</button>
     </form>
   </section>
 </div>
@@ -76,6 +76,7 @@
   </div>
 </footer>
 
-<script src="mainpage.js"></script>
+<script src="home.js"></script>
+<script src="location.js"></script>
 </body>
 </html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host Payment Details</title>
+  <link rel="stylesheet" href="accDetails.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Host Payment Details</h1>
+
+    <!-- Payment Info Card -->
+    <div class="card">
+      <h2>Payment Details</h2>
+      <div class="payment-options">
+        <img src="images/visa.png" alt="Visa">
+        <img src="images/mastercard.png" alt="MasterCard">
+        <img src="images/paypal.png" alt="PayPal">
+      </div>
+      <form id="paymentForm">
+        <div class="form-group">
+          <label for="accountHolder">Account Holder Name</label>
+          <input type="text" id="accountHolder" required>
+        </div>
+
+        <div class="form-group">
+          <label for="accountNumber">Account Number</label>
+          <input type="text" id="accountNumber" required>
+        </div>
+
+        <div class="form-group">
+          <label for="ifsc">IFSC / Bank Code</label>
+          <input type="text" id="ifsc" required>
+        </div>
+
+        <button type="submit">Save Account Details</button>
+      </form>
+    </div>
+
+    <div id="message"></div>
+  </div>
+
+  <script src="accDetails.js"></script>
+</body>
+</html>
