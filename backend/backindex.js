@@ -19,6 +19,8 @@ app.use("/images",express.static(path.join(__dirname, '../Images')));
 app.use('/Authentication/login', express.static(path.join(__dirname, '../frontend/Authentication/login')));
 app.use('/Authentication/signUp', express.static(path.join(__dirname, '../frontend/Authentication/signUp')));
 
+
+
 // Routers
 const loginIndex = require('./Routers/loginIndex');
 const signupIndex = require('./Routers/signupIndex');

@@ -61,7 +61,7 @@ window.addEventListener("DOMContentLoaded" , ()=>{
             console.log(result);
 
             if(res.ok){
-                window.location.href = "/client/SearchResult/result.html"
+                window.location.href = "/client/SearchResult/storeCards.html"
             }
 
         } catch (error) {

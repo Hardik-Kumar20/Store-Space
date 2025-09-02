@@ -4,7 +4,6 @@ window.addEventListener("DOMContentLoaded" , () => {
     location.addEventListener("input" , async (e)=>{
         e.preventDefault();
         const query = location.value.trim();
-
         if(!query) return;
         
         const res = await fetch(`/mainpage/autocomplete/api?text=${encodeURIComponent(query)}`);
@@ -18,9 +17,28 @@ window.addEventListener("DOMContentLoaded" , () => {
             li.addEventListener("mousedown" , ()=>{
                 location.value = place;
                 suggestion.innerHTML = "";
+                fetchStores(place);
             })
             suggestion.appendChild(li);
         });
        }
     })
-})
+
+
+
+    // sending location to listing.js (backend)
+    async function fetchStores(loc) {
+        try {
+            const res = await fetch(`/listing/stores?location=${encodeURIComponent(loc)}`);
+            const result = await res.json();
+            console.log(result, "Stores from backend");
+            // here you can display cards like before
+        } catch (error) {
+            console.error("Error fetching stores:", error);
+        }
+    }
+    
+    
+
+    })
+

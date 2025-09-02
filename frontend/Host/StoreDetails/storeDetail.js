@@ -43,7 +43,7 @@ window.addEventListener("DOMContentLoaded", () => {
             console.log(res);
             if (res.ok) {
                 // Redirect to availability page
-                window.location.href = "/StoreDetails/availability.html";
+                window.location.href = "/Host/StoreDetails/availability.html";
             } else {
                 alert(data.message || "Error creating listing");
             }

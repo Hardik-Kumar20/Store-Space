@@ -38,11 +38,16 @@ loginRouter.post('/login' , async (req , res)=>{
         userId : existingUser._id
     }
     // sign the token
-    const token = jwt.sign(payload , jwtSecret , {expiresIn : '1d'});
+    const token = jwt.sign(payload , jwtSecret , {expiresIn : '1h'});
 
-    //send the token back 
-    res.json({token});
-
+    //send the token(cookie) back for a particular web session 
+    res.cookie("authToken" , token , {
+        httpOnly : true, // so js can not access it
+        secure : false, // make it true if you are working in https
+        sameSite : 'lax'
+    })
+    
+res.json({message : "Logged in successfully"})
    } catch (error) {
     res.status(500).json({message : error.message});
     console.log('log error: ' , error);

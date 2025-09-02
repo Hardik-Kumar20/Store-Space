@@ -54,4 +54,39 @@ router.get('/me', authenticateJWT, async (req, res) => {
   }
 });
 
+
+
+
+//sending the listing data to frontend
+router.get("/stores", async (req, res) => {
+  try {
+      const { location } = req.query;
+      let filter = {};
+
+      if (location) {
+          filter.address = { $regex: location, $options: "i" };
+      }
+
+      const stores = await Listing.find(filter);
+      res.json(stores);
+  } catch (error) {
+      res.status(500).json({ error: "Error fetching stores" });
+  }
+});
+
+
+
+
+
+router.get('/getlistings/:id' , async (req , res)=>{
+  try {
+    const store = await Listing.findById(req.params.id);
+    if(!store) return res.status(400).json({message : "Store not found."})
+    res.json(store)
+  console.log("this is the store detailed page" , store)
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching store" });
+  }
+})
+
 module.exports = router;

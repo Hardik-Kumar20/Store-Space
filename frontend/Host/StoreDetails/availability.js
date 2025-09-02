@@ -26,7 +26,7 @@ document.getElementById("form").addEventListener("submit", async (e) => {
   
     if (res.ok) {
       alert("Availability added successfully!");
-      window.location.href = "/hostDashboard/host.html";
+      window.location.href = "Host/hostdash/host.html";
     }
   });
   

@@ -23,7 +23,7 @@ window.addEventListener('DOMContentLoaded' , ()=>{
                 if(result.token){
                     localStorage.setItem("authToken" , result.token)
                 }
-                window.location.href = "/mainPage/mainpage.html"
+                window.location.href = "/mainPage/home/home.html"
             }
             else{
                 alert("Login failed")
