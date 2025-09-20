@@ -13,16 +13,14 @@ window.addEventListener('DOMContentLoaded' , ()=>{
             const res = await fetch("/login/login" , {
                 method : "Post",
                 headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(formData)
+                body : JSON.stringify(formData),
             })
     
             const result = await res.json();
             console.log(result);
     
             if(res.ok){
-                if(result.token){
-                    localStorage.setItem("authToken" , result.token)
-                }
+                localStorage.setItem("authToken", result.token);
                 window.location.href = "/mainPage/home/home.html"
             }
             else{

@@ -1,18 +1,22 @@
 const jwt = require("jsonwebtoken");
 const jwtsecret = process.env.JWT_SECRET;
 
-function authJWT(req , res , next) {
-    const authToken = req.headers.authorization;
-    if(!authToken) return res.status(400).json({message : "No token"})
-    
-    const token = authToken.split(' ')[1];
+function authJWT(req, res, next) {
+  // Try cookie first, then Authorization header
+  const token = req.cookies.authToken || req.headers["authorization"]?.split(" ")[1];
 
-    // verifying
-    jwt.verify(token , jwtsecret , (err , user)=>{
-        if(err) return res.status(401).json({message : "Bad Auth"});
+  if (!token) {
+    return res.status(401).json({ message: "No token" });
+  }
 
-        req.user = user;
-        next();
-    })
+  jwt.verify(token, jwtsecret, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: "Bad Auth" });
+    }
+
+    req.user = decoded; // { userId: ... }
+    next();
+  });
 }
+
 module.exports = authJWT;

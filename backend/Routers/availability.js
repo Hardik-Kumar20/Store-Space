@@ -18,8 +18,7 @@ router.post("/availability", authenticateJWT, async (req, res) => {
       availableFrom,
       availableTill,
       minimumBookingDuration,
-      blackoutDates: blackoutDates || [],
-      owner: req.user.userId // from JWT payload
+      blackoutDates: blackoutDates || []
     });
 
     await availability.save();

@@ -8,11 +8,10 @@ document.getElementById("form").addEventListener("submit", async (e) => {
       availableFrom: document.getElementById("availableFrom").value,
       availableTill: document.getElementById("availableTill").value,
       minimumBookingDuration: document.getElementById("duration").value,
-      blackoutDates: document.getElementById("blackoutDates").value,
-      listingId
+      blackoutDates: document.getElementById("blackoutDates").value
     };
   
-    const res = await fetch("/availability/add", {
+    const res = await fetch("/availability/availability", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +25,7 @@ document.getElementById("form").addEventListener("submit", async (e) => {
   
     if (res.ok) {
       alert("Availability added successfully!");
-      window.location.href = "Host/hostdash/host.html";
+      window.location.href = "/Host/hostdash/host.html";
     }
   });
   

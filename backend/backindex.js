@@ -5,9 +5,13 @@ require('dotenv').config();
 require('./db');
 const mongoose = require('mongoose');
 const jsonwebtoken = require('jsonwebtoken');
-
-const Port = process.env.PORT || 8000;
+const cookieParser = require("cookie-parser");
+const authJWT = require("./middleware/authMiddleware")
+const cors = require('cors');
 const app = express();
+app.use(cookieParser());
+const Port = process.env.PORT || 8000;
+
 
 // Parse URL-encoded form data & JSON bodies
 app.use(express.urlencoded({ extended: true }));
@@ -27,7 +31,8 @@ const signupIndex = require('./Routers/signupIndex');
 const listing = require("./Routers/listing");
 const availability = require("./Routers/availability");
 const contact = require("./Routers/contact");
-const mainPageRouter = require("./Routers/mainPage")
+const mainPageRouter = require("./Routers/mainPage");
+const auth_check = require("./Routers/authRouter");
 // api check 
 app.get("/", (req, res) => {
     res.send("Api is working fine");
@@ -40,6 +45,21 @@ app.use("/listing" , listing);
 app.use("/availability" , availability);
 app.use("/contact" , contact);
 app.use("/mainpage" , mainPageRouter);
+app.use("/auth_check" , auth_check);
+
+
+
+// app.use(cors({
+//     origin : 'http://localhost:8000',
+//     credentials : true
+// }))
+
+
+
+
+app.get("/mainPage/Host/host.html", authJWT, (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/mainPage/StoreDetails/storeDetails.html"));
+  });
 
 // Start server
 app.listen(Port, (err) => {

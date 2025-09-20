@@ -1,13 +1,11 @@
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
 
-    // checking for token authorization
-    const token = localStorage.getItem('authToken');
-    localStorage.setItem("authToken" , token)
-    console.log(token);
-    if(!token){
-        window.location.href = "/Authentication/signUp/signup.html"
+    const token = localStorage.getItem("authToken");
+    if(!token) {
+        window.location.href = "/Authentication/login/login.html";
+        return;
     }
-
+      
 
     const sub = document.getElementById('detailsForm'); 
 
@@ -18,7 +16,7 @@ window.addEventListener("DOMContentLoaded", () => {
             name: sub.storeName.value,
             address: sub.Address.value,
             kindOf: sub.storeType.value,
-            description: sub.description.value, // fixed typo
+            description: sub.description.value,
             area: {
                 length: Number(sub.length.value),
                 width: Number(sub.width.value),
@@ -33,21 +31,24 @@ window.addEventListener("DOMContentLoaded", () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify(UserData)
+                body: JSON.stringify(UserData),
             });
+            if (!res.ok) {
+                localStorage.removeItem("authToken");
+                window.location.href = "/Authentication/login/login.html";
+                return;
+            }
 
             const data = await res.json();
             console.log(data);
-            console.log(res);
+
             if (res.ok) {
-                // Redirect to availability page
                 window.location.href = "/Host/StoreDetails/availability.html";
             } else {
                 alert(data.message || "Error creating listing");
             }
-
         } catch (err) {
             console.error("Network error:", err);
             alert("Network error. Try again.");
