@@ -7,14 +7,13 @@ const authenticateJWT = require("../middleware/authMiddleware"); // JWT middlewa
 // Create availability for the logged-in user's listing
 router.post("/availability", authenticateJWT, async (req, res) => {
   try {
-    const { listingId, availableFrom, availableTill, minimumBookingDuration, blackoutDates } = req.body;
-
-    if (!listingId || !availableFrom || !availableTill || !minimumBookingDuration) {
+    const { listing, availableFrom, availableTill, minimumBookingDuration, blackoutDates } = req.body;
+    if (!listing || !availableFrom || !availableTill || !minimumBookingDuration) {
       return res.status(400).json({ message: "Missing required fields" });
     }
 
     const availability = new Availability({
-      listing: listingId, // Assuming you store which listing this availability belongs to
+      listing, // Assuming you store which listing this availability belongs to
       availableFrom,
       availableTill,
       minimumBookingDuration,

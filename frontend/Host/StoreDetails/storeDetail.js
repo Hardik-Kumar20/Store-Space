@@ -36,8 +36,16 @@ window.addEventListener("DOMContentLoaded", async () => {
                 body: JSON.stringify(UserData),
             });
             if (!res.ok) {
-                localStorage.removeItem("authToken");
-                window.location.href = "/Authentication/login/login.html";
+                if (res.status === 401 || res.status === 403) {
+                    // Token invalid or expired log out
+                    localStorage.removeItem("authToken");
+                    window.location.href = "/Authentication/login/login.html";
+                    return;
+                }
+            
+                // Otherwise, show an error but don't log out
+                const errData = await res.json();
+                alert(errData.message || "Something went wrong");
                 return;
             }
 
@@ -45,10 +53,14 @@ window.addEventListener("DOMContentLoaded", async () => {
             console.log(data);
 
             if (res.ok) {
+                localStorage.setItem("listingId", data.listing._id);
                 window.location.href = "/Host/StoreDetails/availability.html";
             } else {
                 alert(data.message || "Error creating listing");
             }
+
+
+            console.log("Respones Status:" , res.status);
         } catch (err) {
             console.error("Network error:", err);
             alert("Network error. Try again.");
