@@ -1,0 +1,260 @@
+/* FOCUS ANIMATION */
+.srchBar {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  
+  .srchBar.focused {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  }
+  
+  /* INPUT GROUP */
+  .input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+  
+  /* ICON */
+  .icon {
+    position: absolute;
+    left: 14px;
+    font-size: 16px;
+    opacity: 0.7;
+  }
+  
+  /* INPUT PADDING FIX */
+  .input-group input,
+  .input-group select {
+    padding-left: 40px;
+  }
+  
+  /* ERROR */
+  .error {
+    margin-top: 10px;
+    color: #ef4444;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  /* SKELETON */
+  .skeleton {
+    height: 16px;
+    margin: 8px 16px;
+    border-radius: 6px;
+    background: linear-gradient(
+      90deg,
+      #e5e7eb 25%,
+      #f3f4f6 37%,
+      #e5e7eb 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.4s infinite;
+  }
+  
+  @keyframes shimmer {
+    0% {
+      background-position: -400px 0;
+    }
+    100% {
+      background-position: 400px 0;
+    }
+  }
+  
+  /* DARK MODE SKELETON */
+  body.dark .skeleton {
+    background: linear-gradient(
+      90deg,
+      #1e293b 25%,
+      #334155 37%,
+      #1e293b 63%
+    );
+  }
+  
+
+
+
+
+
+/* HERO SECTION */
+.hero {
+    width: 100%;
+    min-height: 420px;
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.35),
+        rgba(0, 0, 0, 0.35)
+      ),
+      url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 16px;
+  }
+  
+  /* HERO TEXT */
+  .hero h2 {
+    font-size: 36px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+  
+  .hero p {
+    font-size: 16px;
+    color: #e5e7eb;
+    margin-bottom: 28px;
+  }
+  
+  /* SEARCH BAR WRAPPER */
+  .searchBar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* SEARCH CARD */
+  .srchBar {
+    background: #ffffff;
+    border-radius: 999px;
+    padding: 12px 18px;
+    width: 100%;
+    max-width: 980px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* FORM */
+  .srchBar form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  /* INPUTS */
+  .srchBar input,
+  .srchBar select {
+    border: none;
+    outline: none;
+    padding: 12px 14px;
+    font-size: 14px;
+    border-radius: 999px;
+    background: #f9fafb;
+    min-width: 120px;
+  }
+  
+  /* LOCATION */
+  .srchBar input[name="location"] {
+    flex: 2;
+  }
+  
+  /* DATES */
+  .srchBar input[type="date"] {
+    flex: 1.2;
+  }
+  
+  /* SIZE */
+  .srchBar select {
+    flex: 1;
+  }
+  
+  /* SEARCH BUTTON */
+  .srchBar button {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .srchBar button:hover {
+    background: #1e40af;
+  }
+  
+  /* AUTOCOMPLETE */
+  #suggestions {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    max-height: 220px;
+    overflow-y: auto;
+    z-index: 50;
+  }
+  
+  #suggestions li {
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  #suggestions li:hover {
+    background: #f3f4f6;
+  }
+  
+  /* POSITION FIX */
+  .srchBar {
+    position: relative;
+  }
+  
+  /* DARK MODE SUPPORT */
+  body.dark .srchBar {
+    background: #020617;
+  }
+  
+  body.dark .srchBar input,
+  body.dark .srchBar select {
+    background: #0f172a;
+    color: #e5e7eb;
+  }
+  
+  body.dark #suggestions {
+    background: #020617;
+  }
+  
+  body.dark #suggestions li:hover {
+    background: #0f172a;
+  }
+  
+  /* MOBILE */
+  @media (max-width: 900px) {
+    .srchBar {
+      border-radius: 16px;
+    }
+  
+    .srchBar form {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .srchBar input,
+    .srchBar select,
+    .srchBar button {
+      width: 100%;
+      border-radius: 12px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero h2 {
+      font-size: 26px;
+    }
+  
+    .hero p {
+      font-size: 14px;
+    }
+  }
+  

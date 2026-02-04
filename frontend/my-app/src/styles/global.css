@@ -1,0 +1,206 @@
+/* ===== GLOBAL RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  body {
+    background-color: #f4f6f8;
+    color: #333;
+  }
+  
+  /* ===== LOGO ===== */
+  .logo {
+    padding: 20px 40px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .logo h1 {
+    font-size: 2rem;
+    color: #0d6efd;
+    font-weight: 700;
+  }
+  
+  /* ===== NAVBAR ===== */
+  .header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    gap: 30px;
+    padding: 16px 0;
+  }
+  
+  .nav-list li a {
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 20px;
+    transition: all 0.25s ease;
+  }
+  
+  .nav-list li a:hover {
+    background-color: #e9f1ff;
+    color: #0d6efd;
+    transform: translateY(-1px);
+  }
+  
+  .nav-list .cta {
+    background-color: #0d6efd;
+    color: #ffffff !important;
+  }
+  
+  .nav-list .cta:hover {
+    background-color: #084ec1;
+  }
+  
+  /* ===== FOOTER ===== */
+  footer {
+    background-color: #1c1c1e;
+    color: #cccccc;
+    padding: 50px 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  footer div {
+    min-width: 180px;
+    margin: 15px;
+  }
+  
+  footer ul {
+    list-style: none;
+  }
+  
+  footer li {
+    margin: 10px 0;
+  }
+  
+  footer a {
+    color: #cccccc;
+    text-decoration: none;
+  }
+  
+  footer a:hover {
+    color: #ffffff;
+    text-decoration: underline;
+  }
+
+
+  /* ===============================
+   LARGE DESKTOP (1440px+)
+================================ */
+@media (min-width: 1440px) {
+    .hero-content {
+      padding: 70px 80px;
+    }
+  
+    .search-card {
+      max-width: 1200px;
+    }
+  }
+  
+  /* ===============================
+     LAPTOP / SMALL DESKTOP
+  ================================ */
+  @media (max-width: 1200px) {
+    .hero-content {
+      max-width: 100%;
+      padding: 50px 30px;
+    }
+  
+    .search-card {
+      max-width: 100%;
+    }
+  }
+  
+  /* ===============================
+     TABLET
+  ================================ */
+  @media (max-width: 992px) {
+    .hero-section {
+      min-height: 80vh;
+      padding: 30px 16px;
+    }
+  
+    .hero-content h1 {
+      font-size: 34px;
+    }
+  
+    .search-card form {
+      flex-wrap: wrap;
+    }
+  
+    .search-card {
+      border-radius: 20px;
+    }
+  }
+  
+  /* ===============================
+     MOBILE (STACK EVERYTHING)
+  ================================ */
+  @media (max-width: 768px) {
+    .hero-section {
+      min-height: auto;
+      padding: 24px 16px;
+    }
+  
+    .hero-content {
+      padding: 30px 20px;
+    }
+  
+    .hero-content h1 {
+      font-size: 26px;
+    }
+  
+    .hero-content p {
+      font-size: 14px;
+    }
+  
+    .search-card {
+      padding: 16px;
+      border-radius: 16px;
+    }
+  
+    .search-card form {
+      flex-direction: column;
+      gap: 12px;
+    }
+  
+    .input-group input,
+    .input-group select,
+    .search-card button {
+      width: 100%;
+      border-radius: 12px;
+    }
+  }
+  
+  /* ===============================
+     SMALL MOBILE
+  ================================ */
+  @media (max-width: 480px) {
+    .hero-content h1 {
+      font-size: 22px;
+    }
+  
+    .hero-content p {
+      font-size: 13px;
+    }
+  
+    .search-card {
+      box-shadow: none;
+    }
+  }
+  
+  

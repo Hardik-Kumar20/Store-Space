@@ -1,0 +1,114 @@
+.header {
+    width: 100%;
+    height: 70px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .navbar {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  /* LEFT */
+  .nav-left {
+    font-size: 22px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  
+  .nav-left span {
+    color: #2563eb;
+  }
+  
+  /* CENTER */
+  .nav-center {
+    list-style: none;
+    display: flex;
+    transform: translateX(240px);
+    gap: 28px;
+  }
+  
+  .nav-center li {
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  /* RIGHT */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .theme-toggle {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  
+  .nav-link {
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .host-btn {
+    background: #111827;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+  }
+  
+
+
+  /* THEME TOGGLE BUTTON */
+.theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    background: #f3f4f6;        /* light mode */
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  
+  /* DARK MODE */
+  body.dark .theme-toggle {
+    background: #1f2937;        /* dark background */
+    color: #f9fafb;
+  }
+
+
+
+  /* NAVBAR DARK MODE */
+body.dark .header {
+    background: #020617;
+    border-bottom: 1px solid #1e293b;
+  }
+  
+  body.dark .nav-left,
+  body.dark .nav-center li,
+  body.dark .nav-link {
+    color: #e5e7eb;
+  }
+  
+  .theme-toggle:hover {
+    background: #e5e7eb;
+  }
+  
+  body.dark .theme-toggle:hover {
+    background: #334155;
+  }
+  

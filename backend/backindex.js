@@ -6,7 +6,7 @@ require('./db');
 const mongoose = require('mongoose');
 const jsonwebtoken = require('jsonwebtoken');
 const cookieParser = require("cookie-parser");
-const authJWT = require("./middleware/authMiddleware")
+const authJWT = require("./middleware/authMiddleware");
 const cors = require('cors');
 const app = express();
 app.use(cookieParser());
