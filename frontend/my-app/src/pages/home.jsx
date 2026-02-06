@@ -2,7 +2,13 @@ import Navbar from "../components/Navbar";
 import SearchBar from "../components/SearchBar";
 import Footer from "../components/Footer";
 import "../styles/home.css";
+import { Link } from "react-router-dom";
 
+<>
+<Link to={"/about"}>About Us</Link>
+<Link to={"/contact"}>Contact Us</Link>
+<Link to={"/login"}>Login</Link>
+</>
 const Home = () => {
   return (
     <>
