@@ -15,7 +15,7 @@ const About = () => {
 
       {/* SECTION 1 */}
       <section className="about-section">
-        <img src="/images/image.png" alt="Storing items in garage" />
+        <img src="/Images/image.png" alt="Storing items in garage" />
         <div className="content">
           <h2>Store with Ease</h2>
           <p>
@@ -28,7 +28,7 @@ const About = () => {
 
       {/* SECTION 2 */}
       <section className="about-section">
-        <img src="/images/image (1).png" alt="Host receiving payment" />
+        <img src="/Images/image (1).png" alt="Host receiving payment" />
         <div className="content">
           <h2>Earn as a Host</h2>
           <p>
@@ -41,7 +41,7 @@ const About = () => {
 
       {/* SECTION 3 */}
       <section className="about-section">
-        <img src="/images/image (2).png" alt="Different storage spaces" />
+        <img src="/Images/image (2).png" alt="Different storage spaces" />
         <div className="content">
           <h2>Choose Your Space</h2>
           <p>
@@ -54,7 +54,7 @@ const About = () => {
 
       {/* SECTION 4 */}
       <section className="about-section">
-        <img src="/images/image (3).png" alt="Exchanging keys" />
+        <img src="/Images/image (3).png" alt="Exchanging keys" />
         <div className="content">
           <h2>Peer-to-Peer Interaction</h2>
           <p>
@@ -66,7 +66,7 @@ const About = () => {
 
       {/* SECTION 5 */}
       <section className="about-section">
-        <img src="/images/image (4).png" alt="Secure storage" />
+        <img src="/Images/image (4).png" alt="Secure storage" />
         <div className="content">
           <h2>Safe & Secure</h2>
           <p>
