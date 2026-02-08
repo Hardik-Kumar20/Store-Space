@@ -12,7 +12,6 @@ const signupSchema = new mongoose.Schema({
         type : String,
         required : true
     }
-})
+}, {timestamps: true});
 
-const Schema = mongoose.model('Schema' , signupSchema);
-module.exports = Schema;
+export default mongoose.model("User", signupSchema);
