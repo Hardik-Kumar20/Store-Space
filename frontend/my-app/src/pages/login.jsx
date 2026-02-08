@@ -31,7 +31,7 @@ const Login = () => {
         password: formData.userPass
       };
 
-      const res = await fetch("/login/login", {
+      const res = await fetch("/login/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

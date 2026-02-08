@@ -18,7 +18,7 @@ signupRouter.get('/' , (req , res)=>{
 
 // signup router for accepting and checking the data for user verification
 
-signupRouter.post('/signup', async (req, res) => {
+signupRouter.post('/register', async (req, res) => {
     try {
       const { userName, userEmail, password } = req.body;
   
