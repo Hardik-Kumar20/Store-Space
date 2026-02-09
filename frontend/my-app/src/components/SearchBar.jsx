@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/searchBox.css"
+import "../styles/searchBox.css";
 
 const SearchBar = () => {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const SearchBar = () => {
   const [focused, setFocused] = useState(false);
   const [error, setError] = useState("");
 
+  //  AUTOCOMPLETE
   useEffect(() => {
     const fetchSuggestions = async () => {
       if (!formData.location.trim()) {
@@ -27,28 +28,35 @@ const SearchBar = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `/mainpage/autocomplete/api?text=${encodeURIComponent(
-            formData.location
-          )}`
+        `http://localhost:8080/autoComplete/search?text=${encodeURIComponent(
+    formData.location
+  )}`
         );
+        if(!res.ok){
+            const errorText = await res.text();
+            throw new Error(errorText);
+        }
         const data = await res.json();
         setSuggestions(data.results || []);
       } catch (err) {
-        console.error(err);
+        console.error("Autocomplete error:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchSuggestions();
+    const debounce = setTimeout(fetchSuggestions, 200);
+    return () => clearTimeout(debounce);
   }, [formData.location]);
 
+  //  INPUT CHANGE
   const handleChange = (e) => {
     setError("");
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  //  SUBMIT SEARCH
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (new Date(formData.checkout) <= new Date(formData.checkin)) {
@@ -56,17 +64,11 @@ const SearchBar = () => {
       return;
     }
 
-    try {
-      const res = await fetch("/mainpage/searchBar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      });
-
-      if (res.ok) navigate("/search-results");
-    } catch (err) {
-      console.error(err);
-    }
+    navigate(
+      `/search-results?location=${encodeURIComponent(
+        formData.location
+      )}&checkin=${formData.checkin}&checkout=${formData.checkout}&size=${formData.size}`
+    );
   };
 
   return (
@@ -116,6 +118,7 @@ const SearchBar = () => {
             name="checkin"
             value={formData.checkin}
             onChange={handleChange}
+            min={new Date().toISOString().split("T")[0]}
             required
           />
         </div>
@@ -128,6 +131,7 @@ const SearchBar = () => {
             name="checkout"
             value={formData.checkout}
             onChange={handleChange}
+            min={formData.checkin || new Date().toISOString().split("T")[0]}
             required
           />
         </div>
