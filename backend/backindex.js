@@ -6,6 +6,7 @@ const cors = require('cors');
 const app = express();
 const signup = require("./Routers/signup");
 const login = require("./Routers/loginIndex");
+const logout = require("./Routers/logout");
 const autoComplete = require("./Routers/mainPage");
 const authMiddleware = require("./middleware/authMiddleware")
 const db = require ("./db");
@@ -23,16 +24,19 @@ app.use(cors({
 db();
 
 //Signup 
-app.use('/signup', signup);
+app.use('/api/signup', signup);
 
 //Login
-app.use('/login', login);
+app.use('/api/login', login);
 
 //searchBar autocomplete
-app.use('/autoComplete', autoComplete);
+app.use('/api/autoComplete', autoComplete);
+
+// Logout
+app.use("/api/logout", logout);
 
 // (/me) route
-app.get("/me", authMiddleware, (req, res)=>{
+app.get("/api/me", authMiddleware, (req, res)=>{
     res.json({
         userId: req.user.userId
     });

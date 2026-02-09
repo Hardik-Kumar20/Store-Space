@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/searchBox.css";
 
@@ -17,25 +17,47 @@ const SearchBar = () => {
   const [focused, setFocused] = useState(false);
   const [error, setError] = useState("");
 
-  //  AUTOCOMPLETE
-  useEffect(() => {
-    const fetchSuggestions = async () => {
-      if (!formData.location.trim()) {
-        setSuggestions([]);
-        return;
-      }
+  const wrapperRef = useRef(null);
 
+  /* ===============================
+     CLICK OUTSIDE HANDLER
+     =============================== */
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (wrapperRef.current && !wrapperRef.current.contains(e.target)) {
+        setFocused(false);
+        setSuggestions([]);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  /* ===============================
+     AUTOCOMPLETE (DEBOUNCED)
+     =============================== */
+  useEffect(() => {
+    if (!formData.location.trim()) {
+      setSuggestions([]);
+      return;
+    }
+
+    const fetchSuggestions = async () => {
       setLoading(true);
       try {
         const res = await fetch(
-        `http://localhost:8080/autoComplete/search?text=${encodeURIComponent(
-    formData.location
-  )}`
+          `/api/autoComplete/search?text=${encodeURIComponent(
+            formData.location
+          )}`
         );
-        if(!res.ok){
-            const errorText = await res.text();
-            throw new Error(errorText);
+
+        if (!res.ok) {
+          const err = await res.text();
+          throw new Error(err);
         }
+
         const data = await res.json();
         setSuggestions(data.results || []);
       } catch (err) {
@@ -45,17 +67,26 @@ const SearchBar = () => {
       }
     };
 
-    const debounce = setTimeout(fetchSuggestions, 200);
+    const debounce = setTimeout(fetchSuggestions, 250);
     return () => clearTimeout(debounce);
   }, [formData.location]);
 
-  //  INPUT CHANGE
+  /* ===============================
+     INPUT CHANGE
+     =============================== */
   const handleChange = (e) => {
     setError("");
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    // 🔥 reopen suggestions when typing again
+    if (e.target.name === "location") {
+      setFocused(true);
+    }
   };
 
-  //  SUBMIT SEARCH
+  /* ===============================
+     SUBMIT SEARCH
+     =============================== */
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -74,9 +105,10 @@ const SearchBar = () => {
   return (
     <div className={`search-card ${focused ? "focused" : ""}`}>
       <form onSubmit={handleSubmit}>
-        {/* LOCATION */}
-        <div className="input-group">
+        {/* ================= LOCATION ================= */}
+        <div className="input-group" ref={wrapperRef}>
           <span className="icon">📍</span>
+
           <input
             type="text"
             name="location"
@@ -84,12 +116,11 @@ const SearchBar = () => {
             value={formData.location}
             onChange={handleChange}
             onFocus={() => setFocused(true)}
-            onBlur={() => setFocused(false)}
             autoComplete="off"
             required
           />
 
-          {(loading || suggestions.length > 0) && (
+          {(loading || suggestions.length > 0) && focused && (
             <ul className="suggestions">
               {loading
                 ? Array.from({ length: 4 }).map((_, i) => (
@@ -98,9 +129,14 @@ const SearchBar = () => {
                 : suggestions.map((place, index) => (
                     <li
                       key={index}
-                      onMouseDown={() => {
-                        setFormData({ ...formData, location: place });
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        setFormData((prev) => ({
+                          ...prev,
+                          location: place
+                        }));
                         setSuggestions([]);
+                        setFocused(false);
                       }}
                     >
                       {place}
@@ -110,7 +146,7 @@ const SearchBar = () => {
           )}
         </div>
 
-        {/* CHECK-IN */}
+        {/* ================= CHECK-IN ================= */}
         <div className="input-group">
           <span className="icon">📅</span>
           <input
@@ -123,7 +159,7 @@ const SearchBar = () => {
           />
         </div>
 
-        {/* CHECK-OUT */}
+        {/* ================= CHECK-OUT ================= */}
         <div className="input-group">
           <span className="icon">📅</span>
           <input
@@ -131,12 +167,15 @@ const SearchBar = () => {
             name="checkout"
             value={formData.checkout}
             onChange={handleChange}
-            min={formData.checkin || new Date().toISOString().split("T")[0]}
+            min={
+              formData.checkin ||
+              new Date().toISOString().split("T")[0]
+            }
             required
           />
         </div>
 
-        {/* SIZE */}
+        {/* ================= SIZE ================= */}
         <div className="input-group">
           <span className="icon">📦</span>
           <select

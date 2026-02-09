@@ -1,33 +1,25 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
+import AuthButton from "./authBtn";
 import "../styles/navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") === "dark"
-  );
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
-  // 🌙 Theme handling
-  useEffect(() => {
-    document.body.classList.toggle("dark", darkMode);
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
-  }, [darkMode]);
-
-  // 🔐 Check auth status from backend
+  // 🔐 Check auth status (cookie-based)
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const res = await fetch("http://localhost:8080/me", {
+        const res = await fetch("/api/me", {
           credentials: "include"
         });
 
         setIsLoggedIn(res.ok);
-      } catch (err) {
+      } catch {
         setIsLoggedIn(false);
       } finally {
         setCheckingAuth(false);
@@ -37,22 +29,7 @@ const Navbar = () => {
     checkAuth();
   }, []);
 
-  // 🚪 Logout
-  const handleLogout = async () => {
-    try {
-      await fetch("http://localhost:8080/logout", {
-        method: "POST",
-        credentials: "include"
-      });
-
-      setIsLoggedIn(false);
-      navigate("/login");
-    } catch (err) {
-      console.error("Logout failed", err);
-    }
-  };
-
-  if (checkingAuth) return null; // prevents flicker
+  if (checkingAuth) return null; // prevents navbar flicker
 
   return (
     <header className="header">
@@ -71,24 +48,12 @@ const Navbar = () => {
 
         {/* RIGHT */}
         <div className="nav-right">
-          <button
-            className="theme-toggle"
-            onClick={() => setDarkMode(!darkMode)}
-          >
-            {darkMode ? "☀️" : "🌙"}
-          </button>
+          <ThemeToggle />
 
-          {!isLoggedIn && (
-            <span className="nav-link" onClick={() => navigate("/login")}>
-              Login
-            </span>
-          )}
-
-          {isLoggedIn && (
-            <span className="nav-link" onClick={handleLogout}>
-              Logout
-            </span>
-          )}
+          <AuthButton
+            isLoggedIn={isLoggedIn}
+            setIsLoggedIn={setIsLoggedIn}
+          />
 
           <button
             className="host-btn"
