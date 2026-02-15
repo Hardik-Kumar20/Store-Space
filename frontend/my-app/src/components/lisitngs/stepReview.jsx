@@ -17,9 +17,9 @@ const StepReview = ({ data, prev }) => {
         <p><strong>Price Per Day:</strong> ${data.pricePerDay}</p>
         <p><strong>Negotiable:</strong> {data.negotiable ? "Yes" : "No"}</p>
   
-        <div>
-          <button onClick={prev}>Back</button>
-          <button onClick={handleSubmit}>Publish 🚀</button>
+        <div className="button-group">
+          <button className="secondary-btn" onClick={prev}>Back</button>
+          <button className="primary-btn" onClick={handleSubmit}>Publish 🚀</button>
         </div>
       </div>
     );

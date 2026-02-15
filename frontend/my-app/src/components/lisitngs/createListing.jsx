@@ -5,6 +5,7 @@ import StepDetails from "./stepDetails";
 import StepPricing from "./stepPricing";
 import StepImages from "./stepImages";
 import StepReview from "./stepReview";
+import "../../styles/createListing.css"
 
 const CreateListing = () => {
     const [step, setStep] = useState(1);
@@ -53,7 +54,7 @@ const CreateListing = () => {
     };
 
 
-    reutrn(
+    return(
         <div className="listing-container">
         <h2>List Your Space</h2>
         <ProgressBar step={step} />

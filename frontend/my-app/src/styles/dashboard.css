@@ -1,0 +1,227 @@
+/* ============================= */
+/* ===== DASHBOARD LAYOUT ===== */
+/* ============================= */
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    background: #f5f7fa;
+  }
+  
+  body.dark .dashboard-container {
+    background: #111827;
+  }
+  
+  /* ============================= */
+  /* ===== SIDEBAR ===== */
+  /* ============================= */
+  
+  .sidebar {
+    width: 240px;
+    padding: 30px 20px;
+    background: #1e293b;
+    color: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    transition: background 0.3s ease;
+  }
+  
+  .logo {
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #1e293b;
+  }
+  
+  .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: #cbd5e1;
+    font-size: 15px;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  
+  .nav-links a:hover {
+    color: white;
+    transform: translateX(4px);
+  }
+  
+  .nav-links a.active {
+    color: white;
+    font-weight: 600;
+  }
+  
+  body.dark .sidebar {
+    background: #141f3a;
+  }
+  
+  /* ============================= */
+  /* ===== MAIN CONTENT ===== */
+  /* ============================= */
+  
+  .main-content {
+    flex: 1;
+    padding: 40px;
+    animation: fadeInUp 0.5s ease;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* ============================= */
+  /* ===== STATS SECTION ===== */
+  /* ============================= */
+  
+  .stats-section {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .stat-card {
+    flex: 1;
+    min-width: 220px;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  
+  .stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+  }
+  
+  .stat-card h4 {
+    color: #64748b;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  
+  .stat-card p {
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  /* Dark Mode Cards */
+  body.dark .stat-card {
+    background: rgba(30, 41, 59, 0.9);
+    color: #e5e7eb;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  }
+  
+  /* ============================= */
+  /* ===== QUICK ACTIONS ===== */
+  /* ============================= */
+  
+  .quick-actions {
+    margin-bottom: 40px;
+  }
+  
+  .primary-btn {
+    background: #4CAF50;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+  }
+  
+  /* ============================= */
+  /* ===== LISTING GRID ===== */
+  /* ============================= */
+  
+  .listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+  }
+  
+  .listing-card {
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  
+  .listing-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.12);
+  }
+  
+  .listing-card h4 {
+    margin-bottom: 8px;
+  }
+  
+  .secondary-btn {
+    margin-top: 12px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .secondary-btn:hover {
+    background: #f3f4f6;
+  }
+  
+  body.dark .listing-card {
+    background: rgba(30, 41, 59, 0.9);
+    color: #e5e7eb;
+  }
+  
+  body.dark .secondary-btn {
+    background: #1e293b;
+    color: #e5e7eb;
+    border: 1px solid #334155;
+  }
+  
+  body.dark .secondary-btn:hover {
+    background: #334155;
+  }
+  
+  /* ============================= */
+  /* ===== RESPONSIVE ===== */
+  /* ============================= */
+  
+  @media (max-width: 768px) {
+    .dashboard-container {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+    }
+  
+    .stats-section {
+      flex-direction: column;
+    }
+  }
+  

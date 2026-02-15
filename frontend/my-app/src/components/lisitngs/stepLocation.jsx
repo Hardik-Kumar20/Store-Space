@@ -35,10 +35,12 @@ const StepLocation = ({data, update, next, prev}) => {
                     onChange={handleChange}
                 />
 
-                <div>
-                    <button onClick={prev}>Back</button>
-                    <button onClick={next}>Next</button>
+                <div className="button-group">
+                    <button className="secondary-btn" onClick={prev}>Back</button>
+                    <button className="primary-btn" onClick={next}>Next</button>
                 </div>
         </div>
-    )
-}
+    );
+};
+
+export default StepLocation;

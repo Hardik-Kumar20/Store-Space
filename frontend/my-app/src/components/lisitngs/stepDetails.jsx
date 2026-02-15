@@ -15,7 +15,7 @@ const StepDetails = ({ data, update, next, prev }) => {
           value={data.size}
           onChange={(e) => update({ size: e.target.value })}
         />
-  
+        <div className="checkbox-group">
         <label>
           <input
             type="checkbox"
@@ -45,10 +45,11 @@ const StepDetails = ({ data, update, next, prev }) => {
           />
           24/7 Access
         </label>
-  
-        <div>
-          <button onClick={prev}>Back</button>
-          <button onClick={next}>Next</button>
+        </div>
+
+        <div className="button-group">
+          <button className="secondary-btn" onClick={prev}>Back</button>
+          <button className="primary-btn" onClick={next}>Next</button>
         </div>
       </div>
     );

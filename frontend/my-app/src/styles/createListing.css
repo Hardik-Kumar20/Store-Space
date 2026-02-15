@@ -1,0 +1,196 @@
+/* =============================== */
+/* ===== CREATE LISTING PAGE ===== */
+/* =============================== */
+
+.listing-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 40px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
+    animation: fadeInUp 0.4s ease;
+  }
+  
+  body.dark .listing-container {
+    background: rgba(30, 41, 59, 0.92);
+    color: #e5e7eb;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.6);
+  }
+  
+  .listing-container h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  /* =============================== */
+  /* ===== PROGRESS BAR ===== */
+  /* =============================== */
+  
+  .progress-wrapper {
+    margin-bottom: 30px;
+  }
+  
+  .progress-bar {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  
+  .progress-fill {
+    height: 100%;
+    background: #4CAF50;
+    transition: width 0.4s ease;
+  }
+  
+  /* =============================== */
+  /* ===== FORM SECTION ===== */
+  /* =============================== */
+  
+  .step-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  
+  .step-section h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+  
+  /* =============================== */
+  /* ===== INPUTS ===== */
+  /* =============================== */
+  
+  .step-section input,
+  .step-section textarea,
+  .step-section select {
+    padding: 14px 16px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    color: #1e293b;
+  }
+  
+  .step-section textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  
+  .step-section input:focus,
+  .step-section textarea:focus,
+  .step-section select:focus {
+    outline: none;
+    border-color: #4CAF50;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.15);
+  }
+  
+  /* Dark mode inputs */
+  body.dark .step-section input,
+  body.dark .step-section textarea,
+  body.dark .step-section select {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #e5e7eb;
+  }
+  
+  /* =============================== */
+  /* ===== CHECKBOX GROUP ===== */
+  /* =============================== */
+  
+  .checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+  }
+  
+  /* =============================== */
+  /* ===== IMAGE PREVIEW ===== */
+  /* =============================== */
+  
+  .image-preview {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  
+  .image-preview img {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+  }
+  
+  /* =============================== */
+  /* ===== BUTTONS ===== */
+  /* =============================== */
+  
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+  }
+  
+  .primary-btn {
+    background: #4CAF50;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+  }
+  
+  .secondary-btn {
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .secondary-btn:hover {
+    background: #f3f4f6;
+  }
+  
+  body.dark .secondary-btn {
+    background: #1e293b;
+    border: 1px solid #334155;
+    color: #e5e7eb;
+  }
+  
+  /* =============================== */
+  /* ===== ANIMATION ===== */
+  /* =============================== */
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  

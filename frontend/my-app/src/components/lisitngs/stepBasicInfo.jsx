@@ -5,7 +5,7 @@ const StepBasicInfo = ({data, update, next}) => {
     };
 
     return (
-        <div>
+        <div className="step-section">
             <h3>About Your Space</h3>
 
             <input
@@ -33,8 +33,9 @@ const StepBasicInfo = ({data, update, next}) => {
             <option value="Room">Room</option>
             <option value="Container">Container</option>
             </select>
-
-            <button onClick={next}>Next</button>
+            <div className="button-group">
+            <button className="primary-btn" onClick={next}>Next</button>
+            </div>
         </div>
     );
 };

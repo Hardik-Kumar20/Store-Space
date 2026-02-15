@@ -22,7 +22,7 @@ const StepImages = ({ data, update, next, prev }) => {
         onChange={handleImages}
       />
 
-      <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
+      <div className="image-preview">
         {preview.map((img, index) => (
           <img
             key={index}
@@ -34,9 +34,9 @@ const StepImages = ({ data, update, next, prev }) => {
         ))}
       </div>
 
-      <div>
-        <button onClick={prev}>Back</button>
-        <button onClick={next}>Next</button>
+      <div className="button-group">
+        <button className="secondary-btn" onClick={prev}>Back</button>
+        <button className="primary-btn" onClick={next}>Next</button>
       </div>
     </div>
   );
