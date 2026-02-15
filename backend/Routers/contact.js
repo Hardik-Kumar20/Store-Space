@@ -2,9 +2,8 @@ const express = require("express");
 const nodemailer = require("nodemailer");
 const router = express.Router();
 require('dotenv').config();
-const app = express();
 
-router.post('/contact' , (req , res)=>{
+router.post('/' , (req , res)=>{
     console.log(" Incoming contact request:", req.body);
     const {name , email , message} = req.body;
 
@@ -28,10 +27,10 @@ router.post('/contact' , (req , res)=>{
     transporter.sendMail(mailOptions , (error , info)=>{
         if (error) {
             console.log(error);
-            return res.status(500).send('Error sending message');
+            return res.status(500).json({message: 'Error sending message'});
         } else {
             console.log('Email sent: ' + info.response);
-            return res.send('Message sent successfully');
+            return res.status(200).json({message: 'Message sent successfully'});
         }
     })
 

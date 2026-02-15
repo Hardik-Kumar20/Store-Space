@@ -8,6 +8,7 @@ const signup = require("./Routers/signup");
 const login = require("./Routers/loginIndex");
 const logout = require("./Routers/logout");
 const autoComplete = require("./Routers/mainPage");
+const contact = require("./Routers/contact");
 const authMiddleware = require("./middleware/authMiddleware")
 const db = require ("./db");
 require("dotenv").config();
@@ -34,6 +35,9 @@ app.use('/api/autoComplete', autoComplete);
 
 // Logout
 app.use("/api/logout", logout);
+
+// Contact
+app.use("/api/contact", contact);
 
 // (/me) route
 app.get("/api/me", authMiddleware, (req, res)=>{
