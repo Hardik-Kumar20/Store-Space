@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const signupSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     userName : {
         type : String,
         required : true
@@ -11,8 +11,13 @@ const signupSchema = new mongoose.Schema({
     password : {
         type : String,
         required : true
+    },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user"
     }
 }, {timestamps: true});
 
-const user = mongoose.model('user', signupSchema);
+const user = mongoose.model('user', userSchema);
 module.exports = user;

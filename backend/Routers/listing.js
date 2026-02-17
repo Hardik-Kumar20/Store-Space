@@ -1,76 +1,80 @@
-const express = require('express');
-const Listing = require('../Schemas/listingScehma');
-const authenticateJWT = require('../middleware/authMiddleware');
+const express = require("express");
+const Listing = require("../models/Listing");
+const authenticate = require("../middleware/authenticate");
+const authorize = require("../middleware/authorize");
 
 const router = express.Router();
 
-//new listing created
-router.post('/listing', authenticateJWT, async (req, res) => {
-  try {
-    const { userId } = req.user;
 
-    // Validate minimal body fields
-    const { name, address, kindOf, description, area } = req.body || {};
-    if (!name || !address || !kindOf || !description || !area) {
-      return res.status(400).json({ message: 'Missing required fields' });
+
+// POST /listings
+router.post("/", authenticate, async (req, res) => {
+  try {
+    const listing = await Listing.create({
+      owner: req.user.id,
+      ...req.body,
+      approvalStatus: "draft"
+    });
+
+    res.status(201).json({
+      message: "Draft created successfully",
+      listing
+    });
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+// GET /listings/my
+router.get("/my", authenticate, async (req, res) => {
+  try {
+    const listings = await Listing.find({
+      owner: req.user.id
+    }).sort({ createdAt: -1 });
+
+    res.json(listings);
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
+
+// PATCH /listings/:id
+router.patch("/:id", authenticate, async (req, res) => {
+  try {
+    const listing = await Listing.findById(req.params.id);
+
+    if (!listing) {
+      return res.status(404).json({ message: "Listing not found" });
     }
 
-    
-    const listing = new Listing({
-      owner: userId,
-      name,
-      address,
-      kindOf,
-      description,
-      area: {
-        length: Number(area.length),
-        width: Number(area.width),
-        height: Number(area.height),
-        floor: area.floor,
-        weight: Number(area.weight)
-      }
-    });
-    //saved the listing
-    const saved = await listing.save();
-    console.log(saved.createdAt);
-    return res.status(201).json({
-      message: 'Listing created successfully',
-      listing: saved
+    if (listing.owner.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    if (listing.approvalStatus === "approved") {
+      return res.status(400).json({
+        message: "Cannot edit approved listing"
+      });
+    }
+
+    Object.assign(listing, req.body);
+
+    await listing.save();
+
+    res.json({
+      message: "Listing updated successfully",
+      listing
     });
 
   } catch (error) {
-    console.error('Create listing error:', error);
-    return res.status(500).json({ message: 'Server error', error: error.message });
-  }
-});
-
-router.get('/me', authenticateJWT, async (req, res) => {
-  try {
-    const { userId } = req.user;
-    const listings = await Listing.find({ owner: userId }).sort({ createdAt: -1 });
-    res.json({ listings });
-  } catch (error) {
-    res.status(500).json({ message: 'Server error', error: error.message });
-  }
-});
-
-
-
-
-//sending the listing data to frontend
-router.get("/stores", async (req, res) => {
-  try {
-      const { location } = req.query;
-      let filter = {};
-
-      if (location) {
-          filter.address = { $regex: location, $options: "i" };
-      }
-
-      const stores = await Listing.find(filter);
-      res.json(stores);
-  } catch (error) {
-      res.status(500).json({ error: "Error fetching stores" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -78,15 +82,56 @@ router.get("/stores", async (req, res) => {
 
 
 
-router.get('/getlistings/:id' , async (req , res)=>{
+// PATCH /listings/submit/:id
+router.patch("/submit/:id", authenticate, async (req, res) => {
   try {
-    const store = await Listing.findById(req.params.id);
-    if(!store) return res.status(400).json({message : "Store not found."})
-    res.json(store)
-  console.log("this is the store detailed page" , store)
+    const listing = await Listing.findById(req.params.id);
+
+    if (!listing) {
+      return res.status(404).json({ message: "Listing not found" });
+    }
+
+    if (listing.owner.toString() !== req.user.id) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    // Validate required fields before submission
+    if (!listing.title || !listing.description || !listing.price || !listing.location) {
+      return res.status(400).json({
+        message: "Complete all required fields before submitting"
+      });
+    }
+
+    listing.approvalStatus = "pending";
+
+    await listing.save();
+
+    res.json({ message: "Listing submitted for approval" });
+
   } catch (error) {
-    res.status(500).json({ error: "Error fetching store" });
+    res.status(500).json({ message: "Server error" });
   }
-})
+});
+
+
+
+// GET /listings
+router.get("/", async (req, res) => {
+  try {
+    const listings = await Listing.find({
+      approvalStatus: "approved"
+    })
+      .populate("owner", "userName")
+      .sort({ createdAt: -1 });
+
+    res.json(listings);
+
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
 
 module.exports = router;

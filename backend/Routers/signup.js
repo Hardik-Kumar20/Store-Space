@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const UserModel = require('../Schemas/signupSchema');
+const UserModel = require('../Schemas/userSchema');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt')
 const jsonWebToken = require('jsonwebtoken');

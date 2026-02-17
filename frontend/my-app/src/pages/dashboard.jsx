@@ -13,7 +13,18 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const res = await fetch("/api/dashboard");
+        const res = await fetch("/api/dashboard", {
+          credentials: "include"
+        });
+        if(res.status === 401){
+          window.location.href = "/login";
+          return;
+        }
+
+        if(!res.ok){
+          throw new Error("Failed to fetch dashboard");
+        }
+
         const data = await res.json();
 
         setStats(data.stats);
@@ -36,7 +47,7 @@ const Dashboard = () => {
         <p>Loading dashboard...</p>
       ) : (
         <>
-          <StatsCards stats={stats} />
+          <StatsCards stats={stats || {}} />
           <QuickActions />
           <ListingsPreview listings={listings} />
         </>

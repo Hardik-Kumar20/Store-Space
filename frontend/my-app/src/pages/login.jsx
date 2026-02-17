@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import "../styles/login.css";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -8,6 +9,8 @@ import Navbar from "../components/Navbar";
 <Link to={"/signup"}>Signup</Link>
 
 const Login = () => {
+
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -42,7 +45,13 @@ const Login = () => {
 
       if (res.ok) {
         localStorage.setItem("authToken", result.token);
-        navigate("/");
+        
+        const redirect = searchParams.get("redirect");
+        if(redirect === "dashboard"){
+          navigate("/dashboard");
+        }else{
+          navigate("/");
+        }
       } else {
         alert("Login failed");
       }

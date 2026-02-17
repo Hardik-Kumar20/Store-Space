@@ -7,6 +7,7 @@ import "../styles/navbar.css";
 const Navbar = () => {
   const navigate = useNavigate();
 
+  const [user, setUser] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
 
@@ -17,17 +18,24 @@ const Navbar = () => {
         const res = await fetch("/api/me", {
           credentials: "include"
         });
-
-        setIsLoggedIn(res.ok);
+  
+        if (!res.ok) throw new Error();
+  
+        const data = await res.json();
+        setUser(data);
+        setIsLoggedIn(true);
+  
       } catch {
+        setUser(null);
         setIsLoggedIn(false);
       } finally {
         setCheckingAuth(false);
       }
     };
-
+  
     checkAuth();
   }, []);
+  
 
   if (checkingAuth) return null; // prevents navbar flicker
 
@@ -57,10 +65,13 @@ const Navbar = () => {
 
           <button
             className="host-btn"
-            onClick={() =>
-              isLoggedIn
-                ? navigate("/host/store-details")
-                : navigate("/login")
+            onClick={() =>{
+              if(isLoggedIn){
+                navigate("/dashboard");
+              }else{
+                navigate("/login?redirect=dashboard")
+              }
+            }
             }
           >
             Become a Host

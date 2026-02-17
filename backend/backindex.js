@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
+const userModel = require("./Schemas/userSchema");
 
 const app = express();
 const signup = require("./Routers/signup");
@@ -9,6 +10,7 @@ const login = require("./Routers/loginIndex");
 const logout = require("./Routers/logout");
 const autoComplete = require("./Routers/mainPage");
 const contact = require("./Routers/contact");
+const dashboard = require("./Routers/dashboard")
 const authMiddleware = require("./middleware/authMiddleware")
 const db = require ("./db");
 require("dotenv").config();
@@ -39,11 +41,24 @@ app.use("/api/logout", logout);
 // Contact
 app.use("/api/contact", contact);
 
+//Dashboard
+app.use("/api/dashboard", dashboard)
+
+
 // (/me) route
-app.get("/api/me", authMiddleware, (req, res)=>{
-    res.json({
-        userId: req.user.userId
-    });
+app.get("/api/me", authMiddleware, async (req, res)=>{
+    try{
+        const user = await userModel.findById(req.user.id).select("-password");
+        
+        res.json({
+            id: user._id,
+            userName: user.userName,
+            role: user.role,
+            hostRequestStatus: user.hostRequestStatus
+        });
+    }catch(error){
+        res.status(500).json({message: "server error"});
+    }
 });
 
 //example api check
