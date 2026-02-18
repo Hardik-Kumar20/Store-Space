@@ -96,10 +96,13 @@ const SearchBar = () => {
     }
 
     navigate(
-      `/search-results?location=${encodeURIComponent(
-        formData.location
-      )}&checkin=${formData.checkin}&checkout=${formData.checkout}&size=${formData.size}`
+      `/search?location=${encodeURIComponent(formData.location)}
+      &page=1
+      &checkin=${formData.checkin}
+      &checkout=${formData.checkout}
+      &size=${formData.size}`
     );
+    
   };
 
   return (

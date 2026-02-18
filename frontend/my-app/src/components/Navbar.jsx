@@ -18,7 +18,8 @@ const Navbar = () => {
         const res = await fetch("/api/me", {
           credentials: "include"
         });
-  
+        
+
         if (!res.ok) throw new Error();
   
         const data = await res.json();

@@ -7,7 +7,7 @@ const bookingSchema = new mongoose.Schema(
       ref: "Listing",
       required: true
     },
-
+    // Using for scalability cause if user want to see the host we dont populate listings first to see his profile we can acess from this schema directly
     listingOwner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -37,12 +37,14 @@ const bookingSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ["active", "completed", "cancelled"],
+      enum: ["pending", "confirmed", "completed", "cancelled"],
       default: "active"
     }
 
   },
   { timestamps: true }
 );
+
+bookingSchema.index({ listing: 1, startDate: 1, endDate: 1 });
 
 module.exports = mongoose.model("Booking", bookingSchema);

@@ -1,6 +1,6 @@
 const express = require("express");
-const Listing = require("../models/Listing");
-const authenticate = require("../middleware/authenticate");
+const Listing = require("../Schemas/listingScehma");
+const authenticate = require("../middleware/authMiddleware");
 const authorize = require("../middleware/authorize");
 
 const router = express.Router();
@@ -118,16 +118,59 @@ router.patch("/submit/:id", authenticate, async (req, res) => {
 // GET /listings
 router.get("/", async (req, res) => {
   try {
-    const listings = await Listing.find({
+    const {location, page=1, minPrice, maxPrice, size, sort} = req.query;
+    
+    const filters ={
       approvalStatus: "approved"
-    })
-      .populate("owner", "userName")
-      .sort({ createdAt: -1 });
+    };
 
-    res.json(listings);
+    if(location){
+      filters["location.city"] = {
+        $regex: location,
+        $options: "i"
+      };
+    }
 
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    // price filter
+    if(minPrice || maxPrice){
+      filters.price = {};
+      if(minPrice) filters.price.$gte = Number(minPrice);
+      if (maxPrice) filters.price.$lte = Number(maxPrice);
+    }
+
+    // size filter
+    if(size){
+      filters.size = size;
+    }
+
+
+    // pagination setup 
+    const limit = 6;
+    const skip = (Number(page) - 1) * limit;
+
+    // Sorting
+    let sortOption = { createdAt: -1 };
+      if (sort === "price_asc") sortOption = { price: 1 };
+      if (sort === "price_desc") sortOption = { price: -1 };
+      if (sort === "newest") sortOption = { createdAt: -1 };
+
+    let Listings = await Listing.find(filters)
+    .populate("owner", "userName")
+    .sort(sortOption)
+    .skip(skip)
+    .limit(limit);
+
+    const total = await Listing.countDocuments(filters);
+
+    res.json({
+      Listings,
+      totalPages : Math.ceil(total / limit),
+      currentPage: Number(page)
+    });
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({message: "server error"});
   }
 });
 

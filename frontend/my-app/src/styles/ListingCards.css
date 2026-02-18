@@ -1,0 +1,51 @@
+/* ===== Card Wrapper ===== */
+
+.card {
+    display: block;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: #ffffff;
+    text-decoration: none;
+    color: #111;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    transition: all 0.25s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* ===== Image Section ===== */
+  
+  .card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  /* ===== Content Section ===== */
+  
+  .card-content {
+    padding: 14px 16px;
+  }
+  
+  .card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  
+  .card-location {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 8px;
+  }
+  
+  .card-price {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+  }
+  

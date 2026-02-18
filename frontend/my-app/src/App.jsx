@@ -6,6 +6,7 @@ import Signup from "./pages/signup";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import CreateListingPage from "./pages/CreateListingPage";
+import SearchResults from "./pages/serchResults"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/login" element={<Login />}/>
         <Route path="/dashboard" element={<Dashboard />}/>
         <Route path="/dashboard/create-listing" element={<CreateListingPage />}/>
+        <Route path="/search" element={<SearchResults />}/>
       </Routes>
   );
 }

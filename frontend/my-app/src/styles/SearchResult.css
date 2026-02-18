@@ -1,0 +1,88 @@
+/* ===== Search Page Layout ===== */
+
+.search-page {
+    padding: 2rem 3rem;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .search-heading {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #222;
+  }
+  
+  /* ===== Grid Layout ===== */
+  
+  .listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  
+  /* ===== Loading State ===== */
+  
+  .loading-text {
+    font-size: 16px;
+    color: #666;
+  }
+  
+  /* ===== Empty State ===== */
+  
+  .empty-state {
+    text-align: center;
+    margin-top: 4rem;
+    color: #777;
+    font-size: 18px;
+  }
+  
+  /* ===== Filters ===== */
+
+.filters {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .filters input,
+  .filters select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+  }
+  
+  .filters input:focus,
+  .filters select:focus {
+    border-color: #000;
+  }
+  
+  /* ===== Pagination ===== */
+  
+  .pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .pagination button {
+    padding: 8px 14px;
+    border-radius: 6px;
+    border: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  .filters select {
+    cursor: pointer;
+  }
+  

@@ -11,6 +11,7 @@ const logout = require("./Routers/logout");
 const autoComplete = require("./Routers/mainPage");
 const contact = require("./Routers/contact");
 const dashboard = require("./Routers/dashboard")
+const listings = require("./Routers/listing");
 const authMiddleware = require("./middleware/authMiddleware")
 const db = require ("./db");
 require("dotenv").config();
@@ -43,6 +44,9 @@ app.use("/api/contact", contact);
 
 //Dashboard
 app.use("/api/dashboard", dashboard)
+
+//listings
+app.use("/api/listings", listings);
 
 
 // (/me) route

@@ -20,6 +20,10 @@ const listingSchema = new mongoose.Schema({
       type: Number,
       required: true
     },
+    size: {
+      type: String,
+      enum: ["small", "medium", "large"]
+    },
     location: {
       type: String,
       required: true
