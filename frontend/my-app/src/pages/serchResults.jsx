@@ -155,13 +155,16 @@ const SearchResults = () => {
         <button
           disabled={page === 1}
           onClick={() =>
-            setSearchParams({
+          {
+            const params = {
               location,
               page: page - 1,
               minPrice,
               maxPrice,
               size
-            })
+             };
+             setSearchParams(params);
+            }
           }
         >
           Previous
@@ -173,21 +176,23 @@ const SearchResults = () => {
 
         <button
           disabled={page === totalPages}
-          onClick={() =>
-            setSearchParams({
+          onClick={() =>{
+            const params = {
               location,
               page: page + 1,
               minPrice,
               maxPrice,
               size
-            })
+            };
+            setSearchParams(params)
           }
-        >
-          Next
+          }
+          >
+            Next
         </button>
       </div>
     </div>
   );
 };
 
-export default SearchResults;
+export default SearchResults; 

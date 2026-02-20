@@ -8,10 +8,11 @@ const app = express();
 const signup = require("./Routers/signup");
 const login = require("./Routers/loginIndex");
 const logout = require("./Routers/logout");
-const autoComplete = require("./Routers/mainPage");
+const mainpage = require("./Routers/mainPage");
 const contact = require("./Routers/contact");
 const dashboard = require("./Routers/dashboard")
 const listings = require("./Routers/listing");
+const spaces = require("./Routers/bookingRoute");
 const authMiddleware = require("./middleware/authMiddleware")
 const db = require ("./db");
 require("dotenv").config();
@@ -34,7 +35,7 @@ app.use('/api/signup', signup);
 app.use('/api/login', login);
 
 //searchBar autocomplete
-app.use('/api/autoComplete', autoComplete);
+app.use('/api/mainpage', mainpage);
 
 // Logout
 app.use("/api/logout", logout);
@@ -47,6 +48,9 @@ app.use("/api/dashboard", dashboard)
 
 //listings
 app.use("/api/listings", listings);
+
+//Spaces
+app.use("/api/spaces", spaces);
 
 
 // (/me) route

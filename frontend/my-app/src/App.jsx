@@ -6,7 +6,9 @@ import Signup from "./pages/signup";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import CreateListingPage from "./pages/CreateListingPage";
-import SearchResults from "./pages/serchResults"
+import SearchResults from "./pages/serchResults";
+import ListingDetails from "./pages/listingDetailsPage";
+import BookingReview from "./pages/BookingReview";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}/>
         <Route path="/dashboard/create-listing" element={<CreateListingPage />}/>
         <Route path="/search" element={<SearchResults />}/>
+        <Route path="/listingDetails" element={<ListingDetails />}/>
+        <Route path="/bookingReview" element={<BookingReview/>}/>
       </Routes>
   );
 }

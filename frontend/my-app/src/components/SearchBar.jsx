@@ -48,7 +48,7 @@ const SearchBar = () => {
       setLoading(true);
       try {
         const res = await fetch(
-          `/api/autoComplete/search?text=${encodeURIComponent(
+          `/api/mainpage/search?text=${encodeURIComponent(
             formData.location
           )}`
         );
@@ -96,12 +96,9 @@ const SearchBar = () => {
     }
 
     navigate(
-      `/search?location=${encodeURIComponent(formData.location)}
-      &page=1
-      &checkin=${formData.checkin}
-      &checkout=${formData.checkout}
-      &size=${formData.size}`
+      `/search?location=${encodeURIComponent(formData.location)}&checkin=${formData.checkin}&checkout=${formData.checkout}&size=${formData.size}&page=1`
     );
+    
     
   };
 

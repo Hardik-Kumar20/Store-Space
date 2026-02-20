@@ -1,35 +1,39 @@
-// routes/availabilityRoutes.js
-const express = require("express");
-const router = express.Router();
-const Availability = require("../Schemas/availabilitySchema"); // your schema
-const authenticateJWT = require("../middleware/authMiddleware"); // JWT middleware
+const booking = require("../Schemas/bookingSchema");
 
-// Create availability for the logged-in user's listing
-router.post("/availability", authenticateJWT, async (req, res) => {
-  try {
-    const { listing, availableFrom, availableTill, minimumBookingDuration, blackoutDates } = req.body;
-    if (!listing || !availableFrom || !availableTill || !minimumBookingDuration) {
-      return res.status(400).json({ message: "Missing required fields" });
-    }
+const isDateRangeAvailable = async (listingId, startDate, endDate) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
 
-    const availability = new Availability({
-      listing, // Assuming you store which listing this availability belongs to
-      availableFrom,
-      availableTill,
-      minimumBookingDuration,
-      blackoutDates: blackoutDates || []
-    });
-
-    await availability.save();
-
-    res.status(201).json({
-      message: "Availability added successfully",
-      availability
-    });
-  } catch (error) {
-    console.error("Error adding availability:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
+  if(start > end){
+    throw new Error("Invalid date range");
   }
-});
 
-module.exports = router;
+  const conflict = await booking.findOne({
+    listing: listingId,
+    status: "active",
+    startDate: { $lt: end }, 
+    endDate: { $gt: start }
+  });
+  return !conflict;
+}
+
+
+const unavailableListingIds = async (startDate, endDate) => {
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  if( start > end){
+    throw new Error("Invalid date range");
+  }
+
+  const bookings = await booking.find({
+    status: "active",
+    startDate: { $lt: end }, 
+    endDate: { $gt: start }
+  }).distinct("listing");
+};
+
+module.exports = {
+  isDateRangeAvailable,
+  unavailableListingIds
+}

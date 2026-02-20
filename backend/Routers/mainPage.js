@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const mainPageRouter = express.Router();
-const mainPageSchema = require("../Schemas/mainPageSchema");
-
+// const mainPageSchema = require("../Schemas/mainPageSchema");
+const Listings = require("../Schemas/listingScehma");
+const { unavailableListingIds } = require("./availability");
 
 
 
@@ -37,14 +38,45 @@ mainPageRouter.get('/search' , async (req , res)=>{
 
 
 
-mainPageRouter.get("/result", (req, res) => {
-    const { location, checkin, checkout, size } = req.query;
-    if (!location || !checkin || !checkout || !size) {
-      return res.status(400).json({ message: "Missing params" });
-    }
+mainPageRouter.get("/result", async (req, res) => {
+    try {
+      const { location, checkin, checkout, size } = req.query;
   
-    res.json({ location, checkin, checkout, size });
+      if (!location || !checkin || !checkout || !size) {
+        return res.status(400).json({ message: "Missing params" });
+      }
+  
+      const startDate = new Date(checkin);
+      const endDate = new Date(checkout);
+  
+      if (startDate >= endDate) {
+        return res.status(400).json({ message: "Invalid date range" });
+      }
+  
+      // Get unavailable listing IDs
+      const unavailableIds = await unavailableListingIds(
+        startDate,
+        endDate
+      );
+  
+      // Build filters
+      const filters = {
+        approvalStatus: "approved",
+        _id: { $nin: unavailableIds },
+        "location.city": { $regex: location, $options: "i" },
+        size: size
+      };
+  
+      const listings = await Listings.find(filters);
+  
+      res.json(listings);
+  
+    } catch (error) {
+      console.error("Search error:", error.message);
+      res.status(500).json({ message: "Server error" });
+    }
   });
+  
 
 
 
