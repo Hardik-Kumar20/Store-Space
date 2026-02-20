@@ -2,16 +2,20 @@ const express = require("express");
 const Listing = require("../Schemas/listingScehma");
 const authenticate = require("../middleware/authMiddleware");
 const authorize = require("../middleware/authorize");
+const upload = require("../middleware/upload");
 
 const router = express.Router();
 
 
 
 // POST /listings
-router.post("/", authenticate, async (req, res) => {
+router.post("/", authenticate, upload.array('images', 5), async (req, res) => {
   try {
+    const imageUrls = req.files.map(file => file.path);
+
     const listing = await Listing.create({
       owner: req.user.id,
+      images: imageUrls,
       ...req.body,
       approvalStatus: "draft"
     });
