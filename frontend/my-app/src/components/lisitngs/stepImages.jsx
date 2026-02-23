@@ -21,7 +21,7 @@ const StepImages = ({ data, update, next, prev }) => {
         accept="image/*"
         onChange={handleImages}
       />
-
+      
       <div className="image-preview">
         {preview.map((img, index) => (
           <img

@@ -66,5 +66,24 @@ router.post("/:listingId", authenticate, async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   });
+
+
+
+
+  // User can see his bookings
+  router.get("/my-bookings", authenticate, async (req, res)=> {
+    try{
+      const bookings = await Booking.find({customer: req.user.id})
+        .populate({path: "listing", select: "title price images location"})
+        .populate({path: "listingOwner", select: "name email"})
+        .sort({createdAt: -1});
+      if(!bookings){
+        return res.status(401).json({message: "No bookings found"});
+      }
+      return res.status(200).json({bookings});
+    }catch(error){
+      res.status(500).json({message: "Server error"});
+    }
+  })
   
   module.exports = router;

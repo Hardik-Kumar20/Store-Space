@@ -1,4 +1,4 @@
-const StepDetails = ({ data, update, next, prev }) => {
+const StepDetails = ({ data, update, next, prev, errors }) => {
 
     const handleCheckbox = (e) => {
       update({ [e.target.name]: e.target.checked });
@@ -15,6 +15,7 @@ const StepDetails = ({ data, update, next, prev }) => {
           value={data.size}
           onChange={(e) => update({ size: e.target.value })}
         />
+        {errors.size && <p className="error">{errors.size}</p>}
         <div className="checkbox-group">
         <label>
           <input

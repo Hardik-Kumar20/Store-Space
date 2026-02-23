@@ -1,4 +1,4 @@
-const StepPricing = ({ data, update, next, prev }) => {
+const StepPricing = ({ data, update, next, prev, errors }) => {
 
     const handleChange = (e) => {
       update({ [e.target.name]: e.target.value });
@@ -15,7 +15,7 @@ const StepPricing = ({ data, update, next, prev }) => {
           value={data.pricePerDay}
           onChange={handleChange}
         />
-  
+        {errors.pricePerDay && <p className="error">{errors.pricePerDay}</p>}
         <label>
           <input
             type="checkbox"

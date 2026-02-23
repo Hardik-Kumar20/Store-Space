@@ -9,6 +9,7 @@ import CreateListingPage from "./pages/CreateListingPage";
 import SearchResults from "./pages/serchResults";
 import ListingDetails from "./pages/listingDetailsPage";
 import BookingReview from "./pages/BookingReview";
+import MyBookings from "./pages/MyBookings";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/search" element={<SearchResults />}/>
         <Route path="/listingDetails" element={<ListingDetails />}/>
         <Route path="/bookingReview" element={<BookingReview/>}/>
+        <Route path = "/my-bookings" element={<MyBookings />}/>
       </Routes>
   );
 }

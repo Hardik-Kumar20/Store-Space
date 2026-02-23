@@ -1,4 +1,4 @@
-const StepBasicInfo = ({data, update, next}) => {
+const StepBasicInfo = ({data, update, next, errors}) => {
     
     const handleChange = (e) => {
         update({[e.target.name]: e.target.value});
@@ -14,19 +14,20 @@ const StepBasicInfo = ({data, update, next}) => {
             value={data.title}
             onChange={handleChange}
             />
-
+            {errors.title && <p className="error">{errors.title}</p>}
             <textarea
             name="description"
             placeholder="Describe your space"
             value={data.description}
             onChange={handleChange}
             />
-
+            {errors.description && <p className="error">{errors.description}</p>}
             <select
             name="type"
             value={data.type}
             onChange={handleChange}
             >
+            {errors.type && <p className="error">{errors.type}</p>}
             <option value="">Select Type</option>
             <option value="Garage">Garage</option>
             <option value="Warehouse">Warehouse</option>
