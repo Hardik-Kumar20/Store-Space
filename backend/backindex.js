@@ -13,6 +13,7 @@ const contact = require("./Routers/contact");
 const dashboard = require("./Routers/dashboard")
 const listings = require("./Routers/listing");
 const spaces = require("./Routers/bookingRoute");
+const admin = require("./Routers/adminRoute");
 const authMiddleware = require("./middleware/authMiddleware")
 const db = require ("./db");
 require("dotenv").config();
@@ -51,6 +52,9 @@ app.use("/api/listings", listings);
 
 //Spaces
 app.use("/api/spaces", spaces);
+
+//Admin
+app.use("/api/admin", admin);
 
 
 // (/me) route

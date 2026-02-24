@@ -10,6 +10,7 @@ import "../../styles/createListing.css"
 const CreateListing = () => {
     const [step, setStep] = useState(1);
     const [errors, setErrors] = useState({});
+    const [shake, setShake] = useState(false);
 
     const [formData, setFormData] = useState({
         title: "",
@@ -80,13 +81,26 @@ const CreateListing = () => {
     }
 
     const nextStep = () => {
-        if(!validateStep()) return;
+        if(!validateStep()){
+            setShake(true);
+            setTimeout(() => setShake(false), 500);
+            return;
+        };
         setStep(step + 1);
     }
     const prevStep = () => setStep(step - 1);
 
     const updateForm = (newData) => {
         setFormData(prev => ({...prev, ...newData}));
+
+        // Remove error for the update field 
+        setErrors(prev => {
+            const updateErrors ={...prev};
+            Object.keys(newData).forEach(key =>{
+                delete updateErrors[key];
+            });
+            return updateErrors;
+        });
     }
 
     const renderStep = () => {
@@ -113,7 +127,9 @@ const CreateListing = () => {
         <div className="listing-container">
         <h2>List Your Space</h2>
         <ProgressBar step={step} />
+        <div className={shake ? "shake" : ""}>
         {renderStep()}
+        </div>
       </div>
     );
   };
