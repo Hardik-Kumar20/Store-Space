@@ -5,6 +5,7 @@ import Contact from "./pages/contact"
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
+import AdminDashBoard from "./pages/adminboard";
 import CreateListingPage from "./pages/CreateListingPage";
 import SearchResults from "./pages/serchResults";
 import ListingDetails from "./pages/listingDetailsPage";
@@ -24,7 +25,8 @@ function App() {
         <Route path="/search" element={<SearchResults />}/>
         <Route path="/listingDetails" element={<ListingDetails />}/>
         <Route path="/bookingReview" element={<BookingReview/>}/>
-        <Route path = "/my-bookings" element={<MyBookings />}/>
+        <Route path="/my-bookings" element={<MyBookings />}/>
+        <Route path="/adminDashBoard" element={<AdminDashBoard />}/>
       </Routes>
   );
 }

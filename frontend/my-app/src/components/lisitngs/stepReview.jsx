@@ -1,9 +1,4 @@
-const StepReview = ({ data, prev }) => {
-
-    const handleSubmit = () => {
-      console.log("Final Data:", data);
-      alert("Listing Ready to Publish 🚀");
-    };
+const StepReview = ({ data, prev, submit }) => {
   
     return (
       <div>
@@ -19,7 +14,7 @@ const StepReview = ({ data, prev }) => {
   
         <div className="button-group">
           <button className="secondary-btn" onClick={prev}>Back</button>
-          <button className="primary-btn" onClick={handleSubmit}>Publish 🚀</button>
+          <button className="primary-btn" onClick={submit}>Publish 🚀</button>
         </div>
       </div>
     );

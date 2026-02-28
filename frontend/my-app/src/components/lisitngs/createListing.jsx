@@ -1,4 +1,6 @@
 import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import StepBasicInfo from "./stepBasicInfo";
 import StepLocation from "./stepLocation";
 import StepDetails from "./stepDetails";
@@ -11,6 +13,42 @@ const CreateListing = () => {
     const [step, setStep] = useState(1);
     const [errors, setErrors] = useState({});
     const [shake, setShake] = useState(false);
+    const [listingId, setListingId] = useState(null);
+
+    const navigate = useNavigate();
+    
+    const handleSubmit = async () => {
+        try{
+            const data = new FormData();
+
+            //Append text fields
+            Object.keys(formData).forEach(key => {
+                if(key !== "images"){
+                    data.append(key, formData[key]);
+                }
+            })
+
+            //Append images 
+            formData.images.forEach(image => {
+                data.append("images", image);
+            })
+            const response = await axios.post(
+                "/api/listings", 
+                data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                        "content-type": "multipart/form-data"
+                    }
+                }
+            )
+            console.log("Listing created", response.data);
+            navigate("/dashboard");
+        }
+        catch(error){   
+            console.error("Error creating listing", error);
+        }
+    }
 
     const [formData, setFormData] = useState({
         title: "",
@@ -116,7 +154,7 @@ const CreateListing = () => {
             case 5:
                 return <StepImages data={formData} update={updateForm} next={nextStep} prev={prevStep} errors={errors}/>
             case 6:
-                return <StepReview data={formData} prev={prevStep} errors={errors}/>
+                return <StepReview data={formData} prev={prevStep} submit={handleSubmit} />
             default:
                 return null;
         }

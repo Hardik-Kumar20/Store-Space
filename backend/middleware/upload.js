@@ -1,11 +1,11 @@
 const multer = require('multer');
-const {cloudinaryStorage} = require('multer-storage-cloudinary');
+const {CloudinaryStorage} = require('multer-storage-cloudinary');
 const cloudinary = require('../cloudinary');
 const { param } = require('../Routers/bookingRoute');
 
 
-const storage = new cloudinaryStorage({
-    cloudinary,
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
     params: {
         folder: 'Store-Space',
         allowed_formats: ['jpg', 'jpeg', 'png']

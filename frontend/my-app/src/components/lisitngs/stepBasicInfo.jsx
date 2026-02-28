@@ -4,6 +4,7 @@ const StepBasicInfo = ({data, update, next, errors}) => {
         update({[e.target.name]: e.target.value});
     };
 
+
     return (
         <div className="step-section">
             <h3>About Your Space</h3>

@@ -30,8 +30,8 @@ const Login = () => {
 
     try {
       const payload = {
-        userName: formData.userName,
-        password: formData.userPass
+        userName: formData.userName.trim(),
+        password: formData.userPass.trim()
       };
 
       const res = await fetch("/api/login/user", {

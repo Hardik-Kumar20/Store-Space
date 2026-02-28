@@ -86,7 +86,6 @@ router.patch("/:id", authenticate, async (req, res) => {
 
 
 
-// PATCH /listings/submit/:id
 router.patch("/submit/:id", authenticate, async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
@@ -99,15 +98,31 @@ router.patch("/submit/:id", authenticate, async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    // Validate required fields before submission
-    if (!listing.title || !listing.description || !listing.price || !listing.location) {
+    if (listing.approvalStatus !== "draft") {
+      return res.status(400).json({
+        message: "Listing cannot be submitted again"
+      });
+    }
+
+    if (
+      !listing.title ||
+      !listing.description ||
+      !listing.type ||
+      !listing.address ||
+      !listing.city ||
+      !listing.state ||
+      !listing.zip ||
+      !listing.size ||
+      !listing.pricePerDay ||
+      !listing.images ||
+      listing.images.length === 0
+    ) {
       return res.status(400).json({
         message: "Complete all required fields before submitting"
       });
     }
 
     listing.approvalStatus = "pending";
-
     await listing.save();
 
     res.json({ message: "Listing submitted for approval" });
@@ -116,7 +131,6 @@ router.patch("/submit/:id", authenticate, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 
 // GET /listings
@@ -129,7 +143,7 @@ router.get("/", async (req, res) => {
     };
 
     if(location){
-      filters["location.city"] = {
+      filters.city = {
         $regex: location,
         $options: "i"
       };
@@ -137,9 +151,9 @@ router.get("/", async (req, res) => {
 
     // price filter
     if(minPrice || maxPrice){
-      filters.price = {};
-      if(minPrice) filters.price.$gte = Number(minPrice);
-      if (maxPrice) filters.price.$lte = Number(maxPrice);
+      filters.pricePerDay = {};
+      if(minPrice) filters.pricePerDay.$gte = Number(minPrice);
+      if (maxPrice) filters.pricePerDay.$lte = Number(maxPrice);
     }
 
     // size filter
@@ -154,8 +168,8 @@ router.get("/", async (req, res) => {
 
     // Sorting
     let sortOption = { createdAt: -1 };
-      if (sort === "price_asc") sortOption = { price: 1 };
-      if (sort === "price_desc") sortOption = { price: -1 };
+      if (sort === "price_asc") sortOption = { pricePerDay: 1 };
+      if (sort === "price_desc") sortOption = { pricePerDay: -1 };
       if (sort === "newest") sortOption = { createdAt: -1 };
 
     let Listings = await Listing.find(filters)

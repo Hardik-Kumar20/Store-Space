@@ -1,5 +1,5 @@
 const express = require("express");
-const Listing = require("../models/Listing");
+const Listing = require("../Schemas/listingScehma");
 const authenticate = require("../middleware/authMiddleware");
 const authorize = require("../middleware/authorize");
 
@@ -8,11 +8,11 @@ const router = express.Router();
 
 
 
-router.get("./pending-listings", authenticate, authorize("admin"), async (req, res) => {
+router.get("/pending-listings", authenticate, authorize("admin"), async (req, res) => {
     try{
         const listings = await Listing.find({ approvalStatus: "pending"}).populate("owner", "userName").sort({createdAt: -1});
 
-        req.json(listings);
+        res.json(listings);
     }catch(error){
         res.status(500).json({message: "Server error"});
     }
@@ -24,17 +24,16 @@ router.get("./pending-listings", authenticate, authorize("admin"), async (req, r
 // PATCH /admin/approve-listing/:id
 router.patch("/approve-listing/:id", authenticate, authorize("admin"), async (req, res) => {
       try {
-        const listing = await Listing.findById(req.params.id);
+        const listing = await Listing.findOneAndUpdate(
+          {_id: req.params.id, approvalStatus: "pending"},
+          {approvalStatus: "approved"},
+          {new: true}
+        )
   
         if (!listing) {
           return res.status(404).json({ message: "Listing not found" });
-        }
-
-        if (listing.approvalStatus !== "pending") {
-            return res.status(400).json({ message: "Already reviewed" });
-          }          
+        }  
   
-        listing.approvalStatus = "approved";
         await listing.save();
   
         res.json({ message: "Listing approved" });
