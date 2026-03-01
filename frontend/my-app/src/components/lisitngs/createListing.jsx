@@ -37,9 +37,9 @@ const CreateListing = () => {
                 data,
                 {
                     headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`,
                         "content-type": "multipart/form-data"
-                    }
+                    },
+                    withCredentials: true
                 }
             )
             console.log("Listing created", response.data);
@@ -52,9 +52,7 @@ const CreateListing = () => {
 
     const createDraft = async () => {
         const response = await axios.post("/api/listings", {}, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
+            withCredentials: true
         });
         setListingId(response.data.listing._id);
     }
@@ -77,9 +75,9 @@ const CreateListing = () => {
 
         await axios.patch(`api/listing/${listingId}`, data, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem("token")}`,
                 "Content-Type" : "multipart/form-data"
-            }
+            },
+            withCredentials: true
         })
     }
 

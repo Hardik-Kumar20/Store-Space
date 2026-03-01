@@ -10,9 +10,7 @@ const AdminDashBoard = () => {
         const fetchListings = async () =>{
             try {
                 const response = await axios.get("/api/admin/pending-listings", {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
-                    }
+                    withCredentials: true
                 })
                 setListings(response.data);
                 setLoading(false);
@@ -27,9 +25,7 @@ const AdminDashBoard = () => {
         const handleApprove = async (id) => {
             try{
                 await axios.patch(`/api/admin/approve-listing/${id}`, {}, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
-                    }
+                    withCredentials: true
                 })
                 setListings(prev => prev.filter(l => l._id !== id));
             }catch(err){
@@ -41,10 +37,8 @@ const AdminDashBoard = () => {
 
     const handleReject = async (id) => {
         try{
-        axios.patch(`/api/admin/reject-listing/${id}`, {}, {
-            headers:{
-            Authorization: `Bearer ${localStorage.getItem("token")}` 
-            }   
+            await axios.patch(`/api/admin/reject-listing/${id}`, {}, {
+            withCredentials: true   
         })
         setListings(prev => prev.filter(l => l._id !== id));
     }catch(err){

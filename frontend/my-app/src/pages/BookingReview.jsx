@@ -14,7 +14,9 @@ const BookingReview = () => {
 
   useEffect(() => {
     const fetchListing = async () => {
-      const { data } = await axios.get(`/api/spaces/${listingId}`);
+      const { data } = await axios.get(`/api/spaces/${listingId}` , {
+          withCredentials: true
+      });
       setListing(data);
     };
     fetchListing();

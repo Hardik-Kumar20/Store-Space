@@ -4,6 +4,7 @@ import StatsCards from "../components/dashboard/StatsCards";
 import QuickActions from "../components/dashboard/QuickActions";
 import ListingsPreview from "../components/dashboard/ListingsPreview";
 import Navbar from "../components/Navbar";
+import axios from "axios";
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -13,7 +14,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const res = await fetch("/api/dashboard", {
+        const res = await axios.get("/api/dashboard", {
           credentials: "include"
         });
         if(res.status === 401){

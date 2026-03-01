@@ -11,6 +11,7 @@ import SearchResults from "./pages/serchResults";
 import ListingDetails from "./pages/listingDetailsPage";
 import BookingReview from "./pages/BookingReview";
 import MyBookings from "./pages/MyBookings";
+import BookingSuccess from "./pages/successBooking";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/bookingReview" element={<BookingReview/>}/>
         <Route path="/my-bookings" element={<MyBookings />}/>
         <Route path="/adminDashBoard" element={<AdminDashBoard />}/>
+        <Route path="/booking-success" element={<BookingSuccess />}/>
       </Routes>
   );
 }

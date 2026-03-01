@@ -8,9 +8,7 @@ const MyBooking = () => {
         const fetchBookings = async () => {
             try{
                 const res = await axios.get("/api/bookings/my-bookings", {
-                    headers:{
-                        Authorization: `Bearer ${localStorage.getItem("token")}`
-                    }
+                   withCredentials: true
                 });
                 if(!res.data.success) {
                     console.error("Failed to fetch bookings");

@@ -9,26 +9,31 @@ const router = express.Router();
 
 
 // POST /listings
-router.post("/", authenticate, upload.array('images', 5), async (req, res) => {
+router.post("/", authenticate, async (req, res) => {
   try {
-    const imageUrls = req.files.map(file => file.path);
-
-    const listing = await Listing.create({
+    const listing = await Listing.create( {
       owner: req.user.id,
-      images: imageUrls,
-      ...req.body,
+      approvalStatus: "draft",
+    });
+
+    const existingDraft = await Listing.findOne({
+      owner: req.user.id,
       approvalStatus: "draft"
     });
 
+    if(existingDraft){
+      return res.status(400).json({
+        message: "You already have a draft listing. Please complete or delete it before creating a new one.",
+        listing: existingDraft
+      })
+    }
     res.status(201).json({
       message: "Draft created successfully",
       listing
     });
-
-  } catch (error) {
-    res.status(500).json({ message: "Server error" });
-  }
-});
+  }catch(error){
+    res.status(500).json({ message: "Server error" }); }
+})
 
 
 
@@ -50,7 +55,7 @@ router.get("/my", authenticate, async (req, res) => {
 
 
 // PATCH /listings/:id
-router.patch("/:id", authenticate, async (req, res) => {
+router.patch("/:id", authenticate, upload.array('images', 5), async (req, res) => {
   try {
     const listing = await Listing.findById(req.params.id);
 
@@ -62,13 +67,49 @@ router.patch("/:id", authenticate, async (req, res) => {
       return res.status(403).json({ message: "Not authorized" });
     }
 
-    if (listing.approvalStatus === "approved") {
-      return res.status(400).json({
-        message: "Cannot edit approved listing"
+    if (listing.approvalStatus !== "draft") {
+        return res.status(400).json({
+        message: "Cannot edit this listing"
       });
     }
 
-    Object.assign(listing, req.body);
+    if (req.body.pricePerDay !== undefined) {
+      const price = Number(req.body.pricePerDay);
+    
+      if (isNaN(price) || price <= 0) {
+        return res.status(400).json({ message: "Invalid price" });
+      }
+    
+      listing.pricePerDay = price;
+    }
+
+
+    const allowedFields = [
+      "title",
+      "description",
+      "type",
+      "address",
+      "city",
+      "state",
+      "zip",
+      "size",
+      "temperatureControlled",
+      "securityCameras",
+      "access24hr",
+      "pricePerDay",
+      "negotiable"
+    ]
+
+    allowedFields.forEach(field => {
+      if(req.body[field] !== undefined){
+        listing[field] = req.body[field];
+      }
+    })
+
+    // If images are uploaded, update them in the listing 
+    if(req.files && req.files.length > 0){
+      listing.images = req.files.map(file => file.path);
+    }
 
     await listing.save();
 
@@ -172,7 +213,7 @@ router.get("/", async (req, res) => {
       if (sort === "price_desc") sortOption = { pricePerDay: -1 };
       if (sort === "newest") sortOption = { createdAt: -1 };
 
-    let Listings = await Listing.find(filters)
+    let listings = await Listing.find(filters)
     .populate("owner", "userName")
     .sort(sortOption)
     .skip(skip)
@@ -181,7 +222,7 @@ router.get("/", async (req, res) => {
     const total = await Listing.countDocuments(filters);
 
     res.json({
-      Listings,
+      listings,
       totalPages : Math.ceil(total / limit),
       currentPage: Number(page)
     });
