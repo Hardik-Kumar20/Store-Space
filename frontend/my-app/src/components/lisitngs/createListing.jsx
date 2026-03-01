@@ -50,6 +50,39 @@ const CreateListing = () => {
         }
     }
 
+    const createDraft = async () => {
+        const response = await axios.post("/api/listings", {}, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+        setListingId(response.data.listing._id);
+    }
+
+
+    const updateDraft = async () => {
+        if(!listingId) return;
+
+        const data = new FormData();
+
+        Object.keys(formData).forEach(key => {
+            if(key !== "images"){
+                data.append(key, formData[key]);
+            }
+        });
+
+        formData.images.forEach(image => {
+            data.append("images", image);
+        });
+
+        await axios.patch(`api/listing/${listingId}`, data, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+                "Content-Type" : "multipart/form-data"
+            }
+        })
+    }
+
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -118,12 +151,16 @@ const CreateListing = () => {
         return Object.keys(newErrors).length === 0;
     }
 
-    const nextStep = () => {
+    const nextStep = async () => {
         if(!validateStep()){
             setShake(true);
             setTimeout(() => setShake(false), 500);
             return;
         };
+        // If first step and no listing yet → create draft
+        if(step === 1 && !listingId){
+            await createDraft();
+        }
         setStep(step + 1);
     }
     const prevStep = () => setStep(step - 1);
