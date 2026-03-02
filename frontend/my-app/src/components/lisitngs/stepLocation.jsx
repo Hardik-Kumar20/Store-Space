@@ -36,8 +36,8 @@ const StepLocation = ({data, update, next, prev, errors}) => {
                 />
             {errors.zip && <p className="error">{errors.zip}</p>}
                 <div className="button-group">
-                    <button className="secondary-btn" onClick={prev}>Back</button>
-                    <button className="primary-btn" onClick={next}>Next</button>
+                    <button type="button" className="secondary-btn" onClick={prev}>Back</button>
+                    <button type="button" className="primary-btn" onClick={next}>Next</button>
                 </div>
         </div>
     );

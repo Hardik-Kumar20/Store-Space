@@ -13,8 +13,8 @@ const StepReview = ({ data, prev, submit }) => {
         <p><strong>Negotiable:</strong> {data.negotiable ? "Yes" : "No"}</p>
   
         <div className="button-group">
-          <button className="secondary-btn" onClick={prev}>Back</button>
-          <button className="primary-btn" onClick={submit}>Publish 🚀</button>
+          <button type="button" className="secondary-btn" onClick={prev}>Back</button>
+          <button type="button" className="primary-btn" onClick={submit}>Publish 🚀</button>
         </div>
       </div>
     );

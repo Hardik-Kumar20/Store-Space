@@ -36,7 +36,7 @@ const StepBasicInfo = ({data, update, next, errors}) => {
             <option value="Container">Container</option>
             </select>
             <div className="button-group">
-            <button className="primary-btn" onClick={next}>Next</button>
+            <button type="button" className="primary-btn" onClick={next}>Next</button>
             </div>
         </div>
     );

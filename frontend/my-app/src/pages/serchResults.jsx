@@ -99,21 +99,6 @@ const SearchResults = () => {
           }
         />
 
-        <select
-          value={size}
-          onChange={(e) =>
-            handleFilterChange({
-              minPrice,
-              maxPrice,
-              size: e.target.value
-            })
-          }
-        >
-          <option value="">All Sizes</option>
-          <option value="small">Small</option>
-          <option value="medium">Medium</option>
-          <option value="large">Large</option>
-        </select>
 
         <select
         value={sort}

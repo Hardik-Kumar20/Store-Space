@@ -18,44 +18,50 @@ const CreateListing = () => {
     const navigate = useNavigate();
     
     const handleSubmit = async () => {
-        try{
-            const data = new FormData();
-
-            //Append text fields
-            Object.keys(formData).forEach(key => {
-                if(key !== "images"){
-                    data.append(key, formData[key]);
-                }
-            })
-
-            //Append images 
-            formData.images.forEach(image => {
-                data.append("images", image);
-            })
-            const response = await axios.post(
-                "/api/listings", 
-                data,
-                {
-                    headers: {
-                        "content-type": "multipart/form-data"
-                    },
-                    withCredentials: true
-                }
-            )
-            console.log("Listing created", response.data);
+        try {
+            if (!listingId) {
+                console.error("No draft found");
+                return;
+            }
+    
+            // Make sure latest changes are saved
+            await updateDraft();
+    
+            // Move draft → pending
+            await axios.patch(
+                `/api/listings/submit/${listingId}`,
+                {},
+                { withCredentials: true }
+            );
+    
+            console.log("Listing submitted for approval");
             navigate("/dashboard");
-        }
-        catch(error){   
-            console.error("Error creating listing", error);
-        }
-    }
+    
+        } catch (error) {
+            console.error("Error submitting listing:", error.response?.data);
+          }
+    };
+
+
 
     const createDraft = async () => {
-        const response = await axios.post("/api/listings", {}, {
-            withCredentials: true
-        });
-        setListingId(response.data.listing._id);
-    }
+        try {
+            const response = await axios.post(
+                "/api/listings",
+                {},
+                { withCredentials: true }
+            );
+    
+            const newId = response.data.listing._id;
+            setListingId(newId);
+    
+            console.log("Draft created:", newId);
+    
+        } catch (error) {
+            console.error("FULL ERROR:", error.response?.data);
+            throw error;
+        }
+    };
 
 
     const updateDraft = async () => {
@@ -73,10 +79,7 @@ const CreateListing = () => {
             data.append("images", image);
         });
 
-        await axios.patch(`api/listing/${listingId}`, data, {
-            headers: {
-                "Content-Type" : "multipart/form-data"
-            },
+        await axios.patch(`/api/listings/${listingId}`, data, {
             withCredentials: true
         })
     }
@@ -146,35 +149,47 @@ const CreateListing = () => {
                 break;
         }
         setErrors(newErrors);
+        console.log("Validation errors:", newErrors);
         return Object.keys(newErrors).length === 0;
     }
 
     const nextStep = async () => {
-        if(!validateStep()){
+        if (!validateStep()) {
             setShake(true);
             setTimeout(() => setShake(false), 500);
             return;
-        };
-        // If first step and no listing yet → create draft
-        if(step === 1 && !listingId){
-            await createDraft();
         }
-        setStep(step + 1);
-    }
-    const prevStep = () => setStep(step - 1);
+    
+        try {
+            if (step === 1 && !listingId) {
+                await createDraft();
+                await updateDraft();
+            } else if (listingId) {
+                await updateDraft();
+            }
+    
+            setStep(prev => prev + 1);
+    
+        } catch (err) {
+            console.error("Next step failed:", err);
+        }
+    };
 
+    const prevStep = () => {
+        setStep(prev => prev - 1);
+    };
+    
     const updateForm = (newData) => {
-        setFormData(prev => ({...prev, ...newData}));
-
-        // Remove error for the update field 
+        setFormData(prev => ({ ...prev, ...newData }));
+    
         setErrors(prev => {
-            const updateErrors ={...prev};
-            Object.keys(newData).forEach(key =>{
-                delete updateErrors[key];
+            const updatedErrors = { ...prev };
+            Object.keys(newData).forEach(key => {
+                delete updatedErrors[key];
             });
-            return updateErrors;
+            return updatedErrors;
         });
-    }
+    };
 
     const renderStep = () => {
         switch (step) {

@@ -175,22 +175,6 @@ const SearchBar = () => {
           />
         </div>
 
-        {/* ================= SIZE ================= */}
-        <div className="input-group">
-          <span className="icon">📦</span>
-          <select
-            name="size"
-            value={formData.size}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Size</option>
-            <option value="small">Small</option>
-            <option value="medium">Medium</option>
-            <option value="large">Large</option>
-          </select>
-        </div>
-
         <button type="submit">🔍 Search</button>
       </form>
 

@@ -14,29 +14,31 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const res = await axios.get("/api/dashboard", {
-          credentials: "include"
+        const res = await axios.get("/api/listings/my", {
+          withCredentials: true
         });
-        if(res.status === 401){
+  
+        setListings(res.data);
+  
+        // Example stats calculation
+        setStats({
+          totalListings: res.data.length,
+          activeBookings: 0,
+          totalEarnings: 0
+        });
+  
+      } catch (error) {
+        if (error.response?.status === 401) {
           window.location.href = "/login";
           return;
         }
-
-        if(!res.ok){
-          throw new Error("Failed to fetch dashboard");
-        }
-
-        const data = await res.json();
-
-        setStats(data.stats);
-        setListings(data.listings);
-      } catch (error) {
+  
         console.error("Dashboard fetch error:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchDashboardData();
   }, []);
 

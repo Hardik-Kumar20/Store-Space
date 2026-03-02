@@ -14,7 +14,8 @@ router.get("/pending-listings", authenticate, authorize("admin"), async (req, re
 
         res.json(listings);
     }catch(error){
-        res.status(500).json({message: "Server error"});
+      console.error("ADMIN FETCH ERROR:", error);
+      res.status(500).json({message: "Server error"});
     }
 })
 

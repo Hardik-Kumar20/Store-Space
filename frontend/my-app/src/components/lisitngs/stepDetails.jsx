@@ -49,8 +49,8 @@ const StepDetails = ({ data, update, next, prev, errors }) => {
         </div>
 
         <div className="button-group">
-          <button className="secondary-btn" onClick={prev}>Back</button>
-          <button className="primary-btn" onClick={next}>Next</button>
+          <button type="button" className="secondary-btn" onClick={prev}>Back</button>
+          <button type="button" className="primary-btn" onClick={next}>Next</button>
         </div>
       </div>
     );

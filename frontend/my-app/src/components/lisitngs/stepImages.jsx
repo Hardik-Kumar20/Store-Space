@@ -35,8 +35,8 @@ const StepImages = ({ data, update, next, prev }) => {
       </div>
 
       <div className="button-group">
-        <button className="secondary-btn" onClick={prev}>Back</button>
-        <button className="primary-btn" onClick={next}>Next</button>
+        <button type="button" className="secondary-btn" onClick={prev}>Back</button>
+        <button type="button" className="primary-btn" onClick={next}>Next</button>
       </div>
     </div>
   );

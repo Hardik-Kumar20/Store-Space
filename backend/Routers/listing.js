@@ -11,29 +11,33 @@ const router = express.Router();
 // POST /listings
 router.post("/", authenticate, async (req, res) => {
   try {
-    const listing = await Listing.create( {
-      owner: req.user.id,
-      approvalStatus: "draft",
-    });
-
     const existingDraft = await Listing.findOne({
       owner: req.user.id,
       approvalStatus: "draft"
     });
 
-    if(existingDraft){
-      return res.status(400).json({
-        message: "You already have a draft listing. Please complete or delete it before creating a new one.",
+    if (existingDraft) {
+      return res.status(200).json({
+        message: "Draft already exists",
         listing: existingDraft
-      })
+      });
     }
+
+    const listing = await Listing.create({
+      owner: req.user.id,
+      approvalStatus: "draft",
+    });
+
     res.status(201).json({
       message: "Draft created successfully",
       listing
     });
-  }catch(error){
-    res.status(500).json({ message: "Server error" }); }
-})
+
+  } catch (error) {
+    console.error("CREATE ERROR:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
 
 
 
@@ -73,15 +77,7 @@ router.patch("/:id", authenticate, upload.array('images', 5), async (req, res) =
       });
     }
 
-    if (req.body.pricePerDay !== undefined) {
-      const price = Number(req.body.pricePerDay);
-    
-      if (isNaN(price) || price <= 0) {
-        return res.status(400).json({ message: "Invalid price" });
-      }
-    
-      listing.pricePerDay = price;
-    }
+    console.log("REQ.BODY:", req.body);
 
 
     const allowedFields = [
@@ -145,6 +141,21 @@ router.patch("/submit/:id", authenticate, async (req, res) => {
       });
     }
 
+    console.log("DB VALUES BEFORE VALIDATION:");
+console.log({
+  title: listing.title,
+  description: listing.description,
+  type: listing.type,
+  address: listing.address,
+  city: listing.city,
+  state: listing.state,
+  zip: listing.zip,
+  size: listing.size,
+  pricePerDay: listing.pricePerDay,
+  images: listing.images})
+
+
+
     if (
       !listing.title ||
       !listing.description ||
@@ -152,32 +163,43 @@ router.patch("/submit/:id", authenticate, async (req, res) => {
       !listing.address ||
       !listing.city ||
       !listing.state ||
-      !listing.zip ||
-      !listing.size ||
-      !listing.pricePerDay ||
-      !listing.images ||
-      listing.images.length === 0
+      !listing.zip
     ) {
       return res.status(400).json({
         message: "Complete all required fields before submitting"
       });
     }
 
+    if (listing.size == null || listing.size === "") {
+      return res.status(400).json({ message: "Size is required" });
+    }
+    
+    if (listing.pricePerDay == null || listing.pricePerDay <= 0) {
+      return res.status(400).json({ message: "Valid price required" });
+    }
+    
+    if (!listing.images || listing.images.length === 0) {
+      return res.status(400).json({ message: "At least one image required" });
+    }
+
     listing.approvalStatus = "pending";
     await listing.save();
 
-    res.json({ message: "Listing submitted for approval" });
+    console.log("SUBMIT DATA:");
+    console.log(listing);
+    return res.json({ message: "Listing submitted for approval" });
 
   } catch (error) {
+    console.error("SUBMIT ERROR:", error);
     res.status(500).json({ message: "Server error" });
-  }
+}
 });
 
 
 // GET /listings
 router.get("/", async (req, res) => {
   try {
-    const {location, page=1, minPrice, maxPrice, size, sort} = req.query;
+    const {location, page=1, minPrice, maxPrice, sort} = req.query;
     
     const filters ={
       approvalStatus: "approved"
@@ -195,11 +217,6 @@ router.get("/", async (req, res) => {
       filters.pricePerDay = {};
       if(minPrice) filters.pricePerDay.$gte = Number(minPrice);
       if (maxPrice) filters.pricePerDay.$lte = Number(maxPrice);
-    }
-
-    // size filter
-    if(size){
-      filters.size = size;
     }
 
 

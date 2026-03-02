@@ -15,10 +15,10 @@ const AdminDashBoard = () => {
                 setListings(response.data);
                 setLoading(false);
             }catch(err){
-                console.error("Error fetching listings", err);
+                console.error("Error fetching listings", err.response?.data || err.message);
                 setLoading(false);
             }
-        }
+        } 
         fetchListings();
     }, []);
 

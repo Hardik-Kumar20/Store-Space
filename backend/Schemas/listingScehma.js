@@ -11,44 +11,40 @@ const listingSchema = new mongoose.Schema({
 
   title: {
     type: String,
-    required: true,
     trim: true
   },
 
   description: {
     type: String,
-    required: true,
     trim: true
   },
 
+  type: {
+    type: String
+  },
+
   pricePerDay: {
-    type: Number,
-    required: true
+    type: Number
   },
 
   size: {
     type: Number,   // in sq ft
-    required: true
   },
 
   address: {
     type: String,
-    required: true
   },
 
   city: {
-    type: String,
-    required: true
+    type: String
   },
 
   state: {
-    type: String,
-    required: true
+    type: String
   },
 
   zip: {
-    type: String,
-    required: true
+    type: String
   },
 
   temperatureControlled: {
@@ -67,14 +63,12 @@ const listingSchema = new mongoose.Schema({
   },
 
   images: [{
-    type: String,
-    required: true
+    type: String
   }],
 
   owner: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true
+    ref: "user"
   },
 
   approvalStatus: {

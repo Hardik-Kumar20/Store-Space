@@ -56,7 +56,7 @@ app.use("/api/spaces", spaces);
 //Admin
 app.use("/api/admin", admin);
 
-
+ 
 // (/me) route
 app.get("/api/me", authMiddleware, async (req, res)=>{
     try{
