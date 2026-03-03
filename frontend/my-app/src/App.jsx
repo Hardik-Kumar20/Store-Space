@@ -10,27 +10,28 @@ import CreateListingPage from "./pages/CreateListingPage";
 import SearchResults from "./pages/serchResults";
 import ListingDetails from "./pages/listingDetailsPage";
 import BookingReview from "./pages/BookingReview";
-import MyBookings from "./pages/MyBookings";
+import MyBookings from "./pages/MyBookingsBoard";
 import BookingSuccess from "./pages/successBooking";
-
+import { AuthProvider } from "./components/AuthContext";
 function App() {
   return (
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />}/>
-        <Route path="/signup" element={<Signup />}/>
-        <Route path="/login" element={<Login />}/>
-        <Route path="/dashboard" element={<Dashboard />}/>
-        <Route path="/dashboard/create-listing" element={<CreateListingPage />}/>
-        <Route path="/search" element={<SearchResults />}/>
-        <Route path="/listingDetails" element={<ListingDetails />}/>
-        <Route path="/bookingReview" element={<BookingReview/>}/>
-        <Route path="/my-bookings" element={<MyBookings />}/>
-        <Route path="/adminDashBoard" element={<AdminDashBoard />}/>
-        <Route path="/booking-success" element={<BookingSuccess />}/>
-      </Routes>
+    <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />}/>
+          <Route path="/signup" element={<Signup />}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/dashboard" element={<Dashboard />}/>
+          <Route path="/dashboard/create-listing" element={<CreateListingPage />}/>
+          <Route path="/search" element={<SearchResults />}/>
+          <Route path="/listingDetails/:id" element={<ListingDetails />}/>
+          <Route path="/bookingReview/:id" element={<BookingReview/>}/>
+          <Route path="/my-bookings" element={<MyBookings />}/>
+          <Route path="/adminDashBoard" element={<AdminDashBoard />}/>
+          <Route path="/booking-success" element={<BookingSuccess />}/>
+        </Routes>
+    </AuthProvider>
   );
 }
-
 export default App;

@@ -10,13 +10,13 @@ const bookingSchema = new mongoose.Schema(
     // Using for scalability cause if user want to see the host we dont populate listings first to see his profile we can acess from this schema directly
     listingOwner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true
     },
 
     customer: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: "user",
       required: true
     },
 
@@ -38,7 +38,7 @@ const bookingSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["pending", "confirmed", "completed", "cancelled"],
-      default: "active"
+      default: "pending"
     }
 
   },

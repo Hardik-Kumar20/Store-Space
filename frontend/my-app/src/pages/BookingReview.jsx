@@ -1,43 +1,70 @@
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import axios from "axios";
 import "../styles/Booking.css";
+import { useAuth } from "../components/AuthContext";
+
 
 const BookingReview = () => {
-  const { listingId } = useParams();
+  const { id } = useParams();
+  console.log("listingId:", id);
   const location = useLocation();
   const navigate = useNavigate();
-
-  const { startDate, endDate } = location.state || {};
+  const { user } = useAuth(); 
+  const [searchParams] = useSearchParams();
+  const startDate = searchParams.get("start");
+  const endDate = searchParams.get("end");
+  if (!startDate || !endDate) {
+    return <div>Missing booking dates</div>;
+  }
 
   const [listing, setListing] = useState(null);
+  const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const fetchListing = async () => {
-      const { data } = await axios.get(`/api/spaces/${listingId}` , {
-          withCredentials: true
-      });
-      setListing(data);
+      try {
+        const { data } = await axios.get(
+          `/api/listings/${id}`
+        );
+        setListing(data);
+      } catch (err) {
+        console.error("Error fetching listing:", err);
+      } finally {
+        setLoading(false);
+      }
     };
-    fetchListing();
-  }, [listingId]);
 
-  if (!listing) return <div>Loading...</div>;
+    fetchListing();
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!listing) return <div>Listing not found</div>;
 
   const days =
     (new Date(endDate) - new Date(startDate)) /
     (1000 * 60 * 60 * 24);
 
-  const totalPrice = days * listing.price;
+  const totalPrice = days * listing.pricePerDay;
 
   const confirmBooking = async () => {
     try {
-      await axios.post(`/api/bookings/${listingId}`, {
-        startDate,
-        endDate,
-      });
+      await axios.post(
+        `/api/bookings`,
+        {
+          listingId: id,
+          startDate,
+          endDate,
+        },
+        { withCredentials: true }
+      );
 
-      navigate("/booking-success");
+      setTimeout(() => {
+        navigate("/booking-success");
+      },3000)
+      
     } catch (error) {
       alert(error.response?.data?.message || "Error");
     }
@@ -57,7 +84,7 @@ const BookingReview = () => {
           </p>
 
           <div className="price-breakdown">
-            <p>{days} days × ${listing.price}</p>
+            <p>{days} days × ${listing.pricePerDay}</p>
             <h3>Total: ${totalPrice}</h3>
           </div>
 

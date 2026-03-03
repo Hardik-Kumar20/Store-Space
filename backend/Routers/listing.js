@@ -205,11 +205,13 @@ router.get("/", async (req, res) => {
       approvalStatus: "approved"
     };
 
-    if(location){
-      filters.city = {
-        $regex: location,
-        $options: "i"
-      };
+    if (location) {
+      filters.$or = [
+        { address: { $regex: location, $options: "i" } },
+        { city: { $regex: location, $options: "i" } },
+        { state: { $regex: location, $options: "i" } },
+        { zip: { $regex: location, $options: "i" } }
+      ];
     }
 
     // price filter
@@ -251,6 +253,25 @@ router.get("/", async (req, res) => {
 });
 
 
+
+
+
+//Get Particular Listing Details
+router.get("/:id", async (req, res) => {
+  try{
+    const listing = await Listing.findById(req.params.id).populate("owner", "userName");
+
+    if(!listing || listing.approvalStatus !== "approved"){
+      return res.status(404).json({message: "Listing not found"});
+    }
+
+    res.json(listing);
+  }
+  catch(error){
+    console.error("Details Fetch Error:", error);
+    res.status(500).json({message: "Server error"});
+  }
+})
 
 
 module.exports = router;

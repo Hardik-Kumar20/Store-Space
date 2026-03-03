@@ -12,7 +12,7 @@ const mainpage = require("./Routers/mainPage");
 const contact = require("./Routers/contact");
 const dashboard = require("./Routers/dashboard")
 const listings = require("./Routers/listing");
-const spaces = require("./Routers/bookingRoute");
+const bookings = require("./Routers/bookingRoute");
 const admin = require("./Routers/adminRoute");
 const authMiddleware = require("./middleware/authMiddleware")
 const db = require ("./db");
@@ -51,7 +51,7 @@ app.use("/api/dashboard", dashboard)
 app.use("/api/listings", listings);
 
 //Spaces
-app.use("/api/spaces", spaces);
+app.use("/api/bookings", bookings);
 
 //Admin
 app.use("/api/admin", admin);

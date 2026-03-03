@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import ListingCard from "../components/ListingCard";
+import axios from "axios";
 import "../styles/SearchResult.css";
 
 const SearchResults = () => {
@@ -31,18 +32,10 @@ const SearchResults = () => {
       setLoading(true);
 
       const query = searchParams.toString();
-      const res = await fetch(`/api/listings?${query}`);
+      const res = await axios.get(`/api/listings?${query}`);
 
-      if (!res.ok) {
-        const errorText = await res.text();
-        console.error("Backend Error:", errorText);
-        return;
-      }
-
-      const data = await res.json();
-
-      setListings(data.listings || []);
-      setTotalPages(data.totalPages || 1);
+      setListings(res.data.listings || []);
+      setTotalPages(res.data.totalPages || 1);
     } catch (err) {
       console.error(err);
     } finally {

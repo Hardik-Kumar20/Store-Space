@@ -1,111 +1,123 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
-import "../styles/login.css";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Navbar from "../components/Navbar";
-
-
-<Link to={"/signup"}>Signup</Link>
+import { useAuth } from "../components/AuthContext";
+import "../styles/login.css";
 
 const Login = () => {
-
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { setUser } = useAuth();
 
   const [formData, setFormData] = useState({
     userName: "",
     userPass: ""
   });
 
+  const [loading, setLoading] = useState(false);
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value
-    });
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
-      const payload = {
-        userName: formData.userName.trim(),
-        password: formData.userPass.trim()
-      };
-
       const res = await fetch("/api/login/user", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+        credentials: "include", // 🔥 required for cookies
+        body: JSON.stringify({
+          userName: formData.userName.trim(),
+          password: formData.userPass.trim()
+        })
       });
 
-      const result = await res.json();
-      console.log(result);
-
-      if (res.ok) {
-        localStorage.setItem("authToken", result.token);
-        
-        const redirect = searchParams.get("redirect");
-        if(redirect === "dashboard"){
-          navigate("/dashboard");
-        }else{
-          navigate("/");
-        }
-      } else {
-        alert("Login failed");
+      if (!res.ok) {
+        alert("Invalid username or password");
+        setLoading(false);
+        return;
       }
+
+      // 🔥 Now fetch authenticated user (cookie already set)
+      const userRes = await axios.get("/api/me", {
+        withCredentials: true
+      });
+
+      setUser(userRes.data.user);
+
+      // 🔥 Redirect back to where user came from
+      const redirectTo = location.state?.from || "/";
+      navigate(redirectTo);
+
     } catch (error) {
-      console.error("Error in login the user:", error);
+      console.error("Login error:", error);
+      alert("Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-    <Navbar />
+      <Navbar />
 
-    <div className="login-page">
-      {/* LOGO */}
-      <div className="logo">
-        <h3><span className="store">Store</span><span className="space">Space</span></h3>
-      </div>
-
-      {/* CONTAINER */}
-      <div className="container">
-        <div className="heading">
-          <h2>Host Login</h2>
+      <div className="login-page">
+        <div className="logo">
+          <h3>
+            <span className="store">Store</span>
+            <span className="space">Space</span>
+          </h3>
         </div>
 
-        <div className="login">
-          <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="User Name"
-              name="userName"
-              value={formData.userName}
-              onChange={handleChange}
-              required
-            />
+        <div className="container">
+          <div className="heading">
+            <h2>User Login</h2>
+          </div>
 
-            <input
-              type="password"
-              name="userPass"
-              placeholder="password"
-              value={formData.userPass}
-              onChange={handleChange}
-              required
-            />
+          <div className="login">
+            <form onSubmit={handleSubmit}>
+              <input
+                type="text"
+                name="userName"
+                placeholder="User Name"
+                value={formData.userName}
+                onChange={handleChange}
+                required
+              />
 
-            <input type="submit" value="submit" id="btn" />
-          </form>
+              <input
+                type="password"
+                name="userPass"
+                placeholder="Password"
+                value={formData.userPass}
+                onChange={handleChange}
+                required
+              />
 
-          <p>
-            Don’t have an account?
-            <span onClick={() => navigate("/signup")}> SignUp</span>
-          </p>
+              <button type="submit" id="btn" disabled={loading}>
+                {loading ? "Logging in..." : "Login"}
+              </button>
+            </form>
+
+            <p>
+              Don’t have an account?{" "}
+              <span
+                className="signup-link"
+                onClick={() => navigate("/signup")}
+              >
+                Sign Up
+              </span>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
