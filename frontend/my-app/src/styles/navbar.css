@@ -1,114 +1,244 @@
-.header {
-    width: 100%;
-    height: 70px;
-    background: #ffffff;
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .navbar {
-    max-width: 1200px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  /* LEFT */
-  .nav-left {
-    font-size: 22px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-  
-  .nav-left span {
-    color: #2563eb;
-  }
-  
-  /* CENTER */
-  .nav-center {
-    list-style: none;
-    display: flex;
-    transform: translateX(240px);
-    gap: 28px;
-  }
-  
-  .nav-center li {
-    cursor: pointer;
-    font-weight: 500;
-  }
-  
-  /* RIGHT */
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-  
-  .theme-toggle {
-    background: none;
-    border: none;
-    font-size: 18px;
-    cursor: pointer;
-  }
-  
-  .nav-link {
-    cursor: pointer;
-    font-weight: 500;
-  }
-  
-  .host-btn {
-    background: #111827;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-  }
-  
+/* ---------------- NAVBAR CONTAINER ---------------- */
+
+.navbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 42px;
+
+  backdrop-filter: blur(10px);
+  background:rgba(255,255,255,0.75);
+  border-bottom:1px solid rgba(0,0,0,0.05);
+
+  position:sticky;
+  top:0;
+  z-index:100;
+
+  transition:all 0.3s ease;
+}
+
+/* DARK MODE */
+
+.dark .navbar{
+  background:rgba(20,20,20,0.8);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
 
 
-  /* THEME TOGGLE BUTTON */
-.theme-toggle {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    background: #f3f4f6;        /* light mode */
-    transition: background 0.25s ease, color 0.25s ease;
-  }
-  
-  /* DARK MODE */
-  body.dark .theme-toggle {
-    background: #1f2937;        /* dark background */
-    color: #f9fafb;
-  }
+/* ---------------- LOGO ---------------- */
+
+.nav-left{
+  font-size:24px;
+  font-weight:700;
+  letter-spacing:0.5px;
+  cursor:pointer;
+
+  transition:transform 0.2s ease;
+}
+
+.nav-left:hover{
+  transform:scale(1.03);
+}
+
+.nav-left span{
+  color:#3b82f6;
+}
 
 
+/* ---------------- CENTER LINKS ---------------- */
 
-  /* NAVBAR DARK MODE */
-body.dark .header {
-    background: #020617;
-    border-bottom: 1px solid #1e293b;
+.nav-center{
+  display:flex;
+  gap:32px;
+  list-style:none;
+}
+
+.nav-center li{
+  cursor:pointer;
+  font-weight:500;
+  position:relative;
+
+  transition:color 0.2s ease;
+}
+
+.nav-center li:hover{
+  color:#3b82f6;
+}
+
+/* underline animation */
+
+.nav-center li::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-6px;
+
+  width:0%;
+  height:2px;
+  background:#3b82f6;
+
+  transition:width 0.25s ease;
+}
+
+.nav-center li:hover::after{
+  width:100%;
+}
+
+
+/* ---------------- RIGHT SIDE ---------------- */
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:18px;
+}
+
+
+/* ---------------- LOGIN BUTTON ---------------- */
+
+.login-btn{
+  border:none;
+  padding:9px 18px;
+  border-radius:10px;
+
+  background:#3b82f6;
+  color:white;
+  font-weight:500;
+
+  cursor:pointer;
+
+  transition:all 0.2s ease;
+}
+
+.login-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 6px 16px rgba(59,130,246,0.3);
+}
+
+
+/* ---------------- PROFILE MENU ---------------- */
+
+.profile-menu{
+  position:relative;
+}
+
+
+/* ---------------- AVATAR ---------------- */
+
+.avatar{
+  width:40px;
+  height:40px;
+  border-radius:50%;
+
+  background:#3b82f6;
+  color:white;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  font-weight:600;
+  cursor:pointer;
+
+  overflow:hidden;
+
+  transition:all 0.2s ease;
+}
+
+.avatar:hover{
+  transform:scale(1.08);
+  box-shadow:0 6px 18px rgba(0,0,0,0.15);
+}
+
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+
+/* ---------------- DROPDOWN ---------------- */
+
+.dropdown{
+  position:absolute;
+  right:0;
+  top:55px;
+
+  width:220px;
+
+  background:white;
+  border-radius:12px;
+
+  box-shadow:0 12px 35px rgba(0,0,0,0.12);
+
+  padding:10px;
+
+  display:flex;
+  flex-direction:column;
+
+  animation:dropdownFade 0.2s ease;
+}
+
+/* DARK MODE */
+
+.dark .dropdown{
+  background:#1f1f1f;
+  color:white;
+}
+
+
+/* dropdown animation */
+
+@keyframes dropdownFade{
+  from{
+    opacity:0;
+    transform:translateY(-10px);
   }
-  
-  body.dark .nav-left,
-  body.dark .nav-center li,
-  body.dark .nav-link {
-    color: #e5e7eb;
+
+  to{
+    opacity:1;
+    transform:translateY(0);
   }
-  
-  .theme-toggle:hover {
-    background: #e5e7eb;
-  }
-  
-  body.dark .theme-toggle:hover {
-    background: #334155;
-  }
-  
+}
+
+
+/* ---------------- DROPDOWN BUTTONS ---------------- */
+
+.dropdown button{
+  border:none;
+  background:none;
+
+  padding:10px 12px;
+
+  text-align:left;
+  font-size:14px;
+
+  border-radius:8px;
+
+  cursor:pointer;
+
+  transition:all 0.2s ease;
+}
+
+.dropdown button:hover{
+  background:#f3f4f6;
+}
+
+.dark .dropdown button:hover{
+  background:#2b2b2b;
+}
+
+
+/* ---------------- USER NAME ---------------- */
+
+.dropdown-user{
+  font-weight:600;
+  padding:10px 12px;
+
+  border-bottom:1px solid #eee;
+  margin-bottom:6px;
+}
+
+.dark .dropdown-user{
+  border-bottom:1px solid #333;
+}

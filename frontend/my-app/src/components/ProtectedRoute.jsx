@@ -1,12 +1,13 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthContext";
+import PremiumLoader from "./PremiumLoader";
 
 const ProtectedRoute = ({children}) => {
     const {user, loading} = useAuth();
     const location = useLocation();
 
     if(loading){
-        return <p>Checking Authentication...</p>
+        return <PremiumLoader />
     }
 
     // if not logged in redirect to login page

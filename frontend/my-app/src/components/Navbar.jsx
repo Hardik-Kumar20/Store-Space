@@ -1,48 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 import ThemeToggle from "./ThemeToggle";
-import AuthButton from "./authBtn";
 import "../styles/navbar.css";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
 
-  const [user, setUser] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [checkingAuth, setCheckingAuth] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  // 🔐 Check auth status (cookie-based)
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const res = await fetch("/api/me", {
-          credentials: "include"
-        });
-        
+  const logout = async () => {
+    await fetch("/api/logout", {
+      method: "POST",
+      credentials: "include"
+    });
 
-        if (!res.ok) throw new Error();
-  
-        const data = await res.json();
-        setUser(data);
-        setIsLoggedIn(true);
-  
-      } catch {
-        setUser(null);
-        setIsLoggedIn(false);
-      } finally {
-        setCheckingAuth(false);
-      }
-    };
-  
-    checkAuth();
-  }, []);
-  
-
-  if (checkingAuth) return null; // prevents navbar flicker
+    setUser(null);
+    navigate("/");
+  };
 
   return (
     <header className="header">
       <nav className="navbar">
+
         {/* LEFT */}
         <div className="nav-left" onClick={() => navigate("/")}>
           Store<span>Space</span>
@@ -51,33 +32,72 @@ const Navbar = () => {
         {/* CENTER */}
         <ul className="nav-center">
           <li onClick={() => navigate("/")}>Home</li>
-          <li onClick={() => navigate("/about")}>About Us</li>
-          <li onClick={() => navigate("/contact")}>Contact Us</li>
+          <li onClick={() => navigate("/about")}>About</li>
+          <li onClick={() => navigate("/contact")}>Contact</li>
         </ul>
 
         {/* RIGHT */}
         <div className="nav-right">
+
           <ThemeToggle />
 
-          <AuthButton
-            isLoggedIn={isLoggedIn}
-            setIsLoggedIn={setIsLoggedIn}
-          />
+          {!user ? (
+            <button
+              className="login-btn"
+              onClick={() => navigate("/login")}
+            >
+              Login
+            </button>
+          ) : (
+            <div className="profile-menu">
 
-          <button
-            className="host-btn"
-            onClick={() =>{
-              if(isLoggedIn){
-                navigate("/dashboard");
-              }else{
-                navigate("/login?redirect=dashboard")
-              }
-            }
-            }
-          >
-            Become a Host
-          </button>
+              {/* PROFILE IMAGE */}
+              <div
+                className="avatar"
+                onClick={() => setMenuOpen(!menuOpen)}
+              >
+                {user?.avatar ? (
+                  <img src={user.avatar} alt="profile" />
+                ) : (
+                  <span>{user?.userName?.charAt(0).toUpperCase()}</span>
+                )}
+              </div>
+
+              {/* DROPDOWN */}
+              {menuOpen && (
+                <div className="dropdown">
+
+                  <p className="dropdown-user">
+                    👋 Welcome back, {user?.userName}
+                  </p>
+                  <button onClick={() => navigate("/my-bookings")}>
+                    My Bookings
+                  </button>
+
+                  {user.role === "host" && (
+                    <button onClick={() => navigate("/dashboard")}>
+                      Host Dashboard
+                    </button>
+                  )}
+
+                  {user.role === "user" && (
+                    <button onClick={() => navigate("/become-host")}>
+                      Become a Host
+                    </button>
+                  )}
+
+                  <button onClick={logout}>
+                    Logout
+                  </button>
+
+                </div>
+              )}
+
+            </div>
+          )}
+
         </div>
+
       </nav>
     </header>
   );

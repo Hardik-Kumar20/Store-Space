@@ -6,6 +6,7 @@ import DashboardLayout from "../components/dashboard/DashboardLayout";
 import StatsCards from "../components/dashboard/StatsCards";
 import ListingsPreview from "../components/dashboard/ListingsPreview";
 import QuickActions from "../components/dashboard/QuickActions";
+import PremiumLoader from "../components/PremiumLoader";
 import Navbar from "../components/Navbar";
 
 const Dashboard = () => {
@@ -20,13 +21,6 @@ const Dashboard = () => {
 
     const fetchDashboard = async () => {
       try {
-
-        if(!user){
-          Navigate("/login",{
-            state: { from: "/api/dashboard"}
-          });
-          return;
-        }
 
         const res = await axios.get("/api/dashboard", {
           withCredentials: true
@@ -52,15 +46,15 @@ const Dashboard = () => {
 
       <DashboardLayout>
 
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            <StatsCards stats={stats} />
-            <QuickActions />
-            <ListingsPreview listings={listings} />
-          </>
-        )}
+      {loading ? (
+        <PremiumLoader />
+      ) : (
+        <>
+          <StatsCards stats={stats} />
+          <QuickActions />
+          <ListingsPreview listings={listings} />
+        </>
+      )}
 
       </DashboardLayout>
     </>

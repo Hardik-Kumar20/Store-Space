@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "cloudinary": "^2.9.0",
+    "framer": "^2.4.1",
+    "motion": "^12.35.0",
     "multer": "^2.0.2",
     "storage": "^0.2.0"
   }
