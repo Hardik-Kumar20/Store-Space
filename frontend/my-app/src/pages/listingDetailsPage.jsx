@@ -16,7 +16,7 @@ const ListingDetails = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   console.log("ListingDetails rendered");
-console.log("User value:", user);
+  console.log("User value:", user);
   const [listing, setListing] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);

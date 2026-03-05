@@ -92,5 +92,29 @@ router.post("/", authenticate, async (req, res) => {
       res.status(500).json({message: "Server error"});
     }
   })
+
+
+
+
+
+
+  // Hosts can see bookings for their listings
+  router.get("/host", authenticate, async (req, res) => {
+    try {
+  
+      const bookings = await Booking.find({
+        listingOwner: req.user.id
+      })
+        .populate("listing", "title pricePerDay")
+        .populate("customer", "userName userEmail")
+        .sort({ createdAt: -1 });
+  
+      res.json(bookings);
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
   
   module.exports = router;

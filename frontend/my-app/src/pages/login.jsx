@@ -45,14 +45,14 @@ const Login = () => {
         return;
       }
 
-      // 🔥 Now fetch authenticated user (cookie already set)
+      // Now fetch authenticated user (cookie already set)
       const userRes = await axios.get("/api/me", {
         withCredentials: true
       });
 
-      setUser(userRes.data.user);
+      setUser(userRes.data);
 
-      // 🔥 Redirect back to where user came from
+      // Redirect back to where user came from
       const redirectTo = location.state?.from || "/";
       navigate(redirectTo);
 

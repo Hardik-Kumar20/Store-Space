@@ -1,5 +1,5 @@
 /* ============================= */
-/* ===== DASHBOARD LAYOUT ===== */
+/* ===== HOST DASHBOARD LAYOUT ===== */
 /* ============================= */
 
 .dashboard-container {
@@ -224,9 +224,93 @@
       flex-direction: column;
     }
   }
+
+
+
+
+
+   /* ============================= */
+  /* ===== FOR PREVIEW OF LISTINGS ===== */
+  /* ============================= */
   
 
+  .listing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(240px,1fr));
+    gap: 20px;
+  }
+  
+  .listing-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+  
+  .listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  }
+  
+  .listing-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+  
+  .listing-info {
+    padding: 10px 14px;
+  }
+  
+  .price {
+    font-weight: bold;
+  }
+  
+  .bookings {
+    color: gray;
+    font-size: 14px;
+  }
+  
+  .manage-btn {
+    margin: 10px;
+    padding: 6px 12px;
+    border: none;
+    background: #222;
+    color: white;
+    border-radius: 6px;
+  }
+  
+  .preview-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .preview-modal {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 420px;
+  }
+  
+  .preview-image {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+  }
 
+
+
+
+  
 
 
 

@@ -4,29 +4,43 @@ import axios from "axios";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const checkAuth = async () => {
+    try {
+
+      const res = await axios.get("/api/me", {
+        withCredentials: true
+      });
+
+      setUser(res.data);
+
+    } catch (error) {
+
+      setUser(null);
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  };
+
   useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const { data } = await axios.get("/api/me", {
-          withCredentials: true
-        });
-
-        setUser(data);   // because your backend returns user directly
-      } catch {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     checkAuth();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        setUser,
+        loading,
+        isAuthenticated: !!user
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
