@@ -51,8 +51,8 @@ const ListingDetails = () => {
     (selectionRange.endDate - selectionRange.startDate) /
     (1000 * 60 * 60 * 24);
 
-  const totalPrice = days * listing.pricePerDay;
-
+    const totalPrice = days * (listing?.pricePerDay ?? listing?.price ?? 0);
+    
   const handleReserve = async () => {
     if (days <= 0) {
       alert("Please select valid dates");
@@ -158,7 +158,7 @@ const ListingDetails = () => {
 
           <DateRange
             ranges={[selectionRange]}
-            onChange={(item) => setSelectionRange(item.selection)}
+            onChange={(item) => setSelectionRange({ ...item.selection})}
             minDate={new Date()}
           />
 

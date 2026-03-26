@@ -81,7 +81,7 @@ const Navbar = () => {
                   )}
 
                   {user.role === "user" && (
-                    <button onClick={() => navigate("/become-host")}>
+                    <button onClick={() => navigate("/dashboard")}>
                       Become a Host
                     </button>
                   )}
