@@ -1,39 +1,40 @@
-const booking = require("../Schemas/bookingSchema");
+import Booking from "../Schemas/bookingSchema.js";
 
+// Check if a listing is available
 const isDateRangeAvailable = async (listingId, startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
-  if(start > end){
+  if (start > end) {
     throw new Error("Invalid date range");
   }
 
-  const conflict = await booking.findOne({
+  const conflict = await Booking.findOne({
     listing: listingId,
     status: "active",
-    startDate: { $lt: end }, 
-    endDate: { $gt: start }
+    startDate: { $lt: end },
+    endDate: { $gt: start },
   });
+
   return !conflict;
-}
+};
 
-
+// Get all unavailable listing IDs
 const unavailableListingIds = async (startDate, endDate) => {
   const start = new Date(startDate);
   const end = new Date(endDate);
 
-  if( start > end){
+  if (start > end) {
     throw new Error("Invalid date range");
   }
 
-  const bookings = await booking.find({
+  const bookings = await Booking.find({
     status: "active",
-    startDate: { $lt: end }, 
-    endDate: { $gt: start }
+    startDate: { $lt: end },
+    endDate: { $gt: start },
   }).distinct("listing");
+
+  return bookings; // 🔥 IMPORTANT FIX
 };
 
-module.exports = {
-  isDateRangeAvailable,
-  unavailableListingIds
-}
+export { isDateRangeAvailable, unavailableListingIds };

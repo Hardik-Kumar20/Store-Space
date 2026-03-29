@@ -1,16 +1,15 @@
-const multer = require('multer');
-const {CloudinaryStorage} = require('multer-storage-cloudinary');
-const cloudinary = require('../cloudinary');
-const { param } = require('../Routers/bookingRoute');
-
+import multer from "multer";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import cloudinary from "../cloudinary.js";
 
 const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-        folder: 'Store-Space',
-        allowed_formats: ['jpg', 'jpeg', 'png']
-    }
+  cloudinary: cloudinary,
+  params: {
+    folder: "Store-Space",
+    allowed_formats: ["jpg", "jpeg", "png"],
+  },
 });
 
-const upload = multer({storage});
-module.exports = upload;
+const upload = multer({ storage });
+
+export default upload;

@@ -1,69 +1,62 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const cookieParser = require("cookie-parser");
-const cors = require('cors');
-const userModel = require("./Schemas/userSchema");
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import dotenv from "dotenv";
+
+import userModel from "./Schemas/userSchema.js";
+import signup from "./Routers/signup.js";
+import login from "./Routers/loginIndex.js";
+import logout from "./Routers/logout.js";
+import mainpage from "./Routers/mainPage.js";
+import contact from "./Routers/contact.js";
+import dashboard from "./Routers/dashboard.js";
+import listings from "./Routers/listing.js";
+import bookings from "./Routers/bookingRoute.js";
+import admin from "./Routers/adminRoute.js";
+import authMiddleware from "./middleware/authMiddleware.js";
+import db from "./db.js";
+
+dotenv.config();
 
 const app = express();
-const signup = require("./Routers/signup");
-const login = require("./Routers/loginIndex");
-const logout = require("./Routers/logout");
-const mainpage = require("./Routers/mainPage");
-const contact = require("./Routers/contact");
-const dashboard = require("./Routers/dashboard")
-const listings = require("./Routers/listing");
-const bookings = require("./Routers/bookingRoute");
-const admin = require("./Routers/adminRoute");
-const authMiddleware = require("./middleware/authMiddleware")
-const db = require ("./db");
-require("dotenv").config();
-const port = process.env.PORT;
+const port = process.env.PORT || 5000;
+
+// Fix __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 app.use(express.json());
 app.use(cookieParser());
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: true, // important for Render
     credentials: true
-}))
+}));
 
-//Connecting to DataBase
+// DB
 db();
 
-//Signup 
+// Routes
 app.use('/api/signup', signup);
-
-//Login
 app.use('/api/login', login);
-
-//searchBar autocomplete
 app.use('/api/mainpage', mainpage);
-
-// Logout
 app.use("/api/logout", logout);
-
-// Contact
 app.use("/api/contact", contact);
-
-//Dashboard
-app.use("/api/dashboard", dashboard)
-
-//listings
+app.use("/api/dashboard", dashboard);
 app.use("/api/listings", listings);
-
-//Spaces
 app.use("/api/bookings", bookings);
-
-//Admin
 app.use("/api/admin", admin);
 
- 
-// (/me) route
-app.get("/api/me", authMiddleware, async (req, res)=>{
-    try{
+// /me route
+app.get("/api/me", authMiddleware, async (req, res) => {
+    try {
         const user = await userModel.findById(req.user.id).select("-password");
-        
-        if(!user){
-            return res.status(404).json({message: "User not found"});
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
         }
 
         res.json({
@@ -72,17 +65,23 @@ app.get("/api/me", authMiddleware, async (req, res)=>{
             role: user.role,
             hostRequestStatus: user.hostRequestStatus
         });
-    }catch(error){
+    } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Server error" });
     }
 });
 
-//example api check
-app.get('/', (req, res)=>{
-    res.send("Hi from backindex api ");
-})
+// Serve frontend
+app.use(express.static(path.join(__dirname, "public")));
 
-app.listen(port, ()=>{
-    console.log(`Listening on Port ${port}`);
-})
+app.use((req, res) => {
+    res.sendFile(path.join(__dirname, "public", "index.html"));
+  });
+// Test route
+app.get('/api/test', (req, res) => {
+    res.send("Backend working");
+});
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+});

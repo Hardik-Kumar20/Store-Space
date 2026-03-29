@@ -1,0 +1,190 @@
+/* =========================
+   HERO SECTION
+   ========================= */
+   .hero-section {
+    min-height: 100vh;
+  
+    background: url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c")
+      center/cover no-repeat;
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  /* =========================
+     HERO CONTENT
+     ========================= */
+     .hero-content h1 {
+      color: #ffffff;
+      font-weight: 700;
+    }
+    
+    .hero-content p {
+      color: #f3f4f6;
+    }
+  
+  /* =========================
+     SEARCH BAR WRAPPER
+     ========================= */
+  .searchBar {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  /* =========================
+     SEARCH BOX
+     ========================= */
+     .srchBar {
+      width: 100%;
+      max-width: 950px;
+    
+      padding: 16px 20px;
+      border-radius: 50px;
+    
+      background: rgba(255, 255, 255, 0.9); /* 🔥 cleaner */
+      
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    
+      transition: all 0.25s ease;
+    }
+  
+  /* FOCUS EFFECT */
+  .srchBar.focused {
+    transform: scale(1.02);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* =========================
+     FORM
+     ========================= */
+  .srchBar form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  /* =========================
+     INPUT GROUP
+     ========================= */
+  .input-group {
+    position: relative;
+    flex: 1;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* ICON */
+  .icon {
+    position: absolute;
+    left: 12px;
+    font-size: 14px;
+    opacity: 0.7;
+  }
+  
+  /* =========================
+     INPUTS
+     ========================= */
+     .srchBar input,
+     .srchBar select {
+       background: #f9fafb; /* clean input bg */
+       color: #111; /* dark text */
+     }
+  
+  /* =========================
+     BUTTON
+     ========================= */
+  .srchBar button {
+    padding: 10px 18px;
+    border-radius: 30px;
+  
+    border: none;
+    background: #2563eb;
+    color: #fff;
+  
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+  
+  .srchBar button:hover {
+    background: #1e40af;
+  }
+  
+  /* =========================
+     AUTOCOMPLETE
+     ========================= */
+  .suggestions {
+    position: absolute;
+    top: 110%;
+    left: 0;
+    right: 0;
+  
+    background: #ffffff;
+    border-radius: 10px;
+  
+    list-style: none;
+    margin: 0;
+    padding: 6px 0;
+  
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+  }
+  
+  .suggestions li {
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .suggestions li:hover {
+    background: #f3f4f6;
+  }
+  
+  /* =========================
+     ERROR
+     ========================= */
+  .error {
+    margin-top: 10px;
+    color: #ef4444;
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  /* =========================
+     RESPONSIVE
+     ========================= */
+  
+  /* TABLET */
+  @media (max-width: 900px) {
+    .srchBar {
+      border-radius: 20px;
+    }
+  
+    .srchBar form {
+      flex-direction: column;
+    }
+  
+    .srchBar input,
+    .srchBar button {
+      width: 100%;
+    }
+  }
+  
+  /* MOBILE */
+  @media (max-width: 480px) {
+    .hero-content h1 {
+      font-size: 24px;
+    }
+  
+    .hero-content p {
+      font-size: 14px;
+    }
+  
+    .srchBar {
+      padding: 12px;
+    }
+  }

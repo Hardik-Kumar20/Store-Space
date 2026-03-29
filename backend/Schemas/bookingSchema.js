@@ -1,50 +1,53 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
   {
     listing: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Listing",
-      required: true
+      required: true,
     },
-    // Using for scalability cause if user want to see the host we dont populate listings first to see his profile we can acess from this schema directly
+
+    // Direct access to host without populating listing
     listingOwner: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
-      required: true
+      required: true,
     },
 
     customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "user",
-      required: true
+      required: true,
     },
 
     startDate: {
       type: Date,
-      required: true
+      required: true,
     },
 
     endDate: {
       type: Date,
-      required: true
+      required: true,
     },
 
     totalPrice: {
       type: Number,
-      required: true
+      required: true,
     },
 
     status: {
       type: String,
       enum: ["pending", "confirmed", "completed", "cancelled"],
-      default: "pending"
-    }
-
+      default: "pending",
+    },
   },
   { timestamps: true }
 );
 
+// Index for faster date queries
 bookingSchema.index({ listing: 1, startDate: 1, endDate: 1 });
 
-module.exports = mongoose.model("Booking", bookingSchema);
+const Booking = mongoose.model("Booking", bookingSchema);
+
+export default Booking;

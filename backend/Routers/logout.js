@@ -1,14 +1,16 @@
-const express = require('express');
+import express from "express";
+
 const router = express.Router();
 
 router.post("/", (req, res) => {
-    res.clearCookie("token", {
-        httpOnly: true,
-        secure: false,
-        sameSite: "strict",
-        path: "/"
-    })
-    res.status(200).json({message : "Logged out"});
-})
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax", // 🔥 important change
+    path: "/",
+  });
 
-module.exports = router;
+  res.status(200).json({ message: "Logged out" });
+});
+
+export default router;
