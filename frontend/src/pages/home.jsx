@@ -5,7 +5,7 @@ import "../styles/home.css";
 import { Link } from "react-router-dom";
 
 // 🔥 IMPORT IMAGE (IMPORTANT)
-import heroImg from "../assets/images/herostorage.png";
+import heroImg from "../assets/images/heroStorage.png";
 
 const Home = () => {
   return (
