@@ -89,6 +89,13 @@ app.use((req, res, next) => {
   // otherwise serve React app
   res.sendFile(path.join(__dirname, "public", "index.html"));
 });
+
+app.get("/debug-files", (req, res) => {
+    const fs = require("fs");
+    const files = fs.readdirSync(path.join(__dirname, "public"));
+    res.json(files);
+  });
+
 // Test route
 app.get('/api/test', (req, res) => {
     res.send("Backend working");
