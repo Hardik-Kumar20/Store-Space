@@ -22,7 +22,7 @@ import db from "./db.js";
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 10000;
 
 // Fix __dirname
 const __filename = fileURLToPath(import.meta.url);
