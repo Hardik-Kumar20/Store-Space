@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
@@ -74,9 +75,20 @@ app.get("/api/me", authMiddleware, async (req, res) => {
 // Serve frontend
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use((req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-  });
+app.use((req, res, next) => {
+  // if request is for API → skip
+  if (req.path.startsWith("/api")) return next();
+
+  // check if file exists (image, asset, etc.)
+  const filePath = path.join(__dirname, "public", req.path);
+
+  if (fs.existsSync(filePath)) {
+    return next(); // let static serve it
+  }
+
+  // otherwise serve React app
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 // Test route
 app.get('/api/test', (req, res) => {
     res.send("Backend working");
