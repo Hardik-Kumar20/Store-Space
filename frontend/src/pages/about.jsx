@@ -1,6 +1,11 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import "../styles/about.css";
+import image from "../assets/images/image.png";
+import image5 from "../assets/images/image5.png";
+import image6 from "../assets/images/image6.png";
+import image7 from "../assets/images/image7.png";
+import image8 from "../assets/images/image8.png";
 
 const About = () => {
   return (
@@ -15,7 +20,7 @@ const About = () => {
 
       {/* SECTION 1 */}
       <section className="about-section">
-        <img src="/images/image.png" alt="Storing items in garage" />
+        <img src={image} alt="Storing items in garage" />
         <div className="content">
           <h2>Store with Ease</h2>
           <p>
@@ -28,7 +33,7 @@ const About = () => {
 
       {/* SECTION 2 */}
       <section className="about-section">
-        <img src="/images/image5.png" alt="Host receiving payment" />
+        <img src={image5} alt="Host receiving payment" />
         <div className="content">
           <h2>Earn as a Host</h2>
           <p>
@@ -41,7 +46,7 @@ const About = () => {
 
       {/* SECTION 3 */}
       <section className="about-section">
-        <img src="/images/image6.png" alt="Different storage spaces" />
+        <img src={image6} alt="Different storage spaces" />
         <div className="content">
           <h2>Choose Your Space</h2>
           <p>
@@ -54,7 +59,7 @@ const About = () => {
 
       {/* SECTION 4 */}
       <section className="about-section">
-        <img src="/images/image7.png" alt="Exchanging keys" />
+        <img src={image7} alt="Exchanging keys" />
         <div className="content">
           <h2>Peer-to-Peer Interaction</h2>
           <p>
@@ -66,7 +71,7 @@ const About = () => {
 
       {/* SECTION 5 */}
       <section className="about-section">
-        <img src="/images/image8.png" alt="Secure storage" />
+        <img src={image8} alt="Secure storage" />
         <div className="content">
           <h2>Safe & Secure</h2>
           <p>

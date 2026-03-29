@@ -2,8 +2,6 @@
 .hero-section {
   height: 100vh; /* full screen */
 
-  background-image: url("/images/herostorage.png");
-
   background-size: cover;       /* fills screen properly */
   background-position: center;  /* keeps center visible */
   background-repeat: no-repeat;
