@@ -14,6 +14,8 @@
 
     RUN ls -R src/assets/images
     
+    RUN find . | grep images
+    
     # Now run the build
     RUN npm run build
     
