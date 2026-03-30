@@ -11,6 +11,8 @@
     # Copy everything INSIDE the frontend folder to the CURRENT workdir
     # Use '.' instead of 'frontend' to avoid nesting
     COPY frontend/ .
+
+    RUN ls -R src/assets/images
     
     # Now run the build
     RUN npm run build
