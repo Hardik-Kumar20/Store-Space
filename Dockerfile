@@ -1,12 +1,18 @@
 # ---------- FRONTEND BUILD ----------
     FROM node:22 AS frontend-build
 
+    # Set the workdir
     WORKDIR /app/frontend
     
+    # Copy only the package files first (better caching)
     COPY frontend/package*.json ./
     RUN npm install
     
-    COPY frontend ./
+    # Copy everything INSIDE the frontend folder to the CURRENT workdir
+    # Use '.' instead of 'frontend' to avoid nesting
+    COPY frontend/ .
+    
+    # Now run the build
     RUN npm run build
     
     
