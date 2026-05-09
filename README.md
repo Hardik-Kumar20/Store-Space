@@ -1,5 +1,8 @@
 # Store-Space
 
+## Live Demo
+[Live Demo](https://store-space.onrender.com)
+
 ## Overview
 This application helps to find the places where we can keep our items and things for some days.
 
@@ -94,62 +97,40 @@ http://localhost:5173
 
 ## Folder Structure
 
+```text
 StoreSpace
-├── artillery-test.yml
 ├── backend
-│   ├── backindex.js
-│   ├── cloudinary.js
+│   ├── package.json
 │   ├── db.js
+│   ├── cloudinary.js
 │   ├── middleware
 │   │   ├── authMiddleware.js
 │   │   ├── authorize.js
 │   │   └── upload.js
-│   ├── package.json
 │   ├── Routers
-│   │   ├── adminRoute.js
 │   │   ├── authRouter.js
-│   │   ├── availability.js
 │   │   ├── bookingRoute.js
-│   │   ├── contact.js
-│   │   ├── dashboard.js
 │   │   ├── listing.js
-│   │   ├── loginIndex.js
-│   │   ├── logout.js
-│   │   ├── mainPage.js
-│   │   ├── signup.js
-│   │   └── uploadImg.js
+│   │   └── dashboard.js
 │   └── Schemas
-│       ├── availabilitySchema.js
+│       ├── userSchema.js
 │       ├── bookingSchema.js
-│       ├── listingSchema.js
-│       ├── mainPageSchema.js
-│       └── userSchema.js
-│
+│       └── listingSchema.js
+
 ├── frontend
 │   ├── src
 │   │   ├── components
-│   │   │   ├── dashboard
-│   │   │   ├── listings
-│   │   │   └── shared components
-│   │   │
 │   │   ├── pages
-│   │   │   ├── Home
-│   │   │   ├── Dashboard
-│   │   │   ├── Login / Signup
-│   │   │   ├── Booking
-│   │   │   └── Listings
-│   │   │
 │   │   ├── assets
-│   │   ├── styles
 │   │   ├── App.jsx
 │   │   └── main.jsx
-│   │
 │   ├── public
-│   ├── package.json
-│   └── vite.config.js
-│
+│   └── package.json
+
 ├── Dockerfile
 └── README.md
+```
+
 
 
 ## Screenshots
